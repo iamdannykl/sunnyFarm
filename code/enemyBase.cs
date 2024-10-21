@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class enemyBase : CharacterBody2D
+public partial class enemyBase : CharacterBody2D, Iattackble
 {
     [Export] public float speed;
     [Export] public float atkValue;
@@ -9,6 +9,18 @@ public partial class enemyBase : CharacterBody2D
     public bool canMove = true;
     player player;
     Vector2 direction;
+    public float Hp
+    {
+        get => hp;
+        set
+        {
+            hp = value;
+            if (hp <= 0)
+            {
+                QueueFree();
+            }
+        }
+    }
     public override void _Ready()
     {
         player = GetTree().CurrentScene.GetNode<player>("playObjects/CharacterBody2D");
@@ -40,5 +52,10 @@ public partial class enemyBase : CharacterBody2D
             Velocity = direction * speed;
             MoveAndSlide();
         }
+    }
+
+    public virtual void attacked()
+    {
+        throw new NotImplementedException();
     }
 }

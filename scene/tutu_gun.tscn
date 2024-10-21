@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ju2iihuohobq"]
+[gd_scene load_steps=6 format=3 uid="uid://ju2iihuohobq"]
 
 [ext_resource type="Texture2D" uid="uid://dy8377dheoosq" path="res://resources/1.png" id="1_6sg6b"]
 [ext_resource type="Script" path="res://code/bugun.cs" id="1_idlfc"]
+[ext_resource type="PackedScene" uid="uid://cxerjmrmly5t8" path="res://scene/bullet.tscn" id="2_17mi1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_36p0c"]
 atlas = ExtResource("1_6sg6b")
@@ -14,9 +15,15 @@ radius = 92.0217
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_idlfc")
+blt = ExtResource("2_17mi1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_36p0c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_hk7as")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="shootIt"]
