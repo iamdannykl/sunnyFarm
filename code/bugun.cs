@@ -29,5 +29,9 @@ public partial class bugun : Area2D
 			Bullet bltNew = blt.Instantiate() as Bullet;
 			AddChild(bltNew);
 		}
+		else
+		{
+			GlobalRotation = 0;
+		}
 	}
 }

@@ -19,10 +19,6 @@ config/icon="res://icon.svg"
 
 project/assembly_name="Sunny Farm"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/dialogue_nodes/plugin.cfg")
-
 [input]
 
 ui_left={

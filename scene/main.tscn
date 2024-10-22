@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://dhhld26l4kghn"]
+[gd_scene load_steps=22 format=4 uid="uid://dhhld26l4kghn"]
 
 [ext_resource type="Texture2D" uid="uid://5vmsdvfl2p88" path="res://resources/Tiny Wonder Forest 1.0/tilemaps/spring tilemap.png" id="1_6pij1"]
 [ext_resource type="TileSet" uid="uid://cwiqqys5h605s" path="res://scene/buildings.tres" id="2_8cblm"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://gibi7osibs61" path="res://resources/Tiny Wonder Forest 1.0/characters/main character/walk and idle.png" id="4_48j37"]
 [ext_resource type="PackedScene" uid="uid://ju2iihuohobq" path="res://scene/tutu_gun.tscn" id="6_aa2ww"]
 [ext_resource type="PackedScene" uid="uid://ckdy6r52ifnlj" path="res://scene/blueBird.tscn" id="6_fxihv"]
+[ext_resource type="PackedScene" uid="uid://bsbyl3rpv1cl2" path="res://scene/short_gun.tscn" id="7_t0sn6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dn0ki"]
 texture = ExtResource("1_6pij1")
@@ -685,11 +686,17 @@ position = Vector2(14, -10)
 [node name="Marker2D2" type="Marker2D" parent="playObjects/CharacterBody2D/markers"]
 position = Vector2(14, -1)
 
+[node name="shortGun" parent="playObjects/CharacterBody2D/markers/Marker2D2" instance=ExtResource("7_t0sn6")]
+
 [node name="Marker2D3" type="Marker2D" parent="playObjects/CharacterBody2D/markers"]
 position = Vector2(14, 10)
 
+[node name="tutuGun" parent="playObjects/CharacterBody2D/markers/Marker2D3" instance=ExtResource("6_aa2ww")]
+
 [node name="Marker2D4" type="Marker2D" parent="playObjects/CharacterBody2D/markers"]
 position = Vector2(-11, -10)
+
+[node name="shortGun" parent="playObjects/CharacterBody2D/markers/Marker2D4" instance=ExtResource("7_t0sn6")]
 
 [node name="Marker2D5" type="Marker2D" parent="playObjects/CharacterBody2D/markers"]
 position = Vector2(-11, -1)
