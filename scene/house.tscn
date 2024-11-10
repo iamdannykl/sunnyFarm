@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpeqlj46vmwls"]
+
+[ext_resource type="Texture2D" uid="uid://c5ixlpqlpiywu" path="res://resources/Tiny Wonder Forest 1.0/items&objects/summer and spring items.png" id="1_k2pgh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wshb5"]
+atlas = ExtResource("1_k2pgh")
+region = Rect2(11, 0, 76, 92)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jmim2"]
+size = Vector2(26, 60)
+
+[node name="Sprite2D" type="Sprite2D"]
+position = Vector2(0, 26)
+texture = SubResource("AtlasTexture_wshb5")
+offset = Vector2(0, -26)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-7.99895e-06, 7)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_jmim2")

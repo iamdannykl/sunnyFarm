@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ju2iihuohobq"]
+[gd_scene load_steps=7 format=3 uid="uid://ju2iihuohobq"]
 
 [ext_resource type="Texture2D" uid="uid://dy8377dheoosq" path="res://resources/1.png" id="1_6sg6b"]
 [ext_resource type="Script" path="res://code/bugun.cs" id="1_idlfc"]
 [ext_resource type="PackedScene" uid="uid://cxerjmrmly5t8" path="res://scene/bullet.tscn" id="2_17mi1"]
+[ext_resource type="AudioStream" uid="uid://2uo8j3utb541" path="res://audio/sfx/shooting/Shooting0007.ogg" id="4_rjfc2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_36p0c"]
 atlas = ExtResource("1_6sg6b")
@@ -16,6 +17,7 @@ collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_idlfc")
 blt = ExtResource("2_17mi1")
+atkValue = 7.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_36p0c")
@@ -25,5 +27,8 @@ shape = SubResource("CircleShape2D_hk7as")
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_rjfc2")
 
 [connection signal="timeout" from="Timer" to="." method="shootIt"]

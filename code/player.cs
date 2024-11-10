@@ -1,6 +1,5 @@
 using Godot;
-using System;
-using System.Collections.Generic;
+
 public partial class player : CharacterBody2D
 {
 	[Export] public float Speed;

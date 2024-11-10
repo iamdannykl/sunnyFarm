@@ -1,12 +1,15 @@
 using Godot;
-using System;
+using System.Collections.Generic;
 
 public partial class enemyBase : CharacterBody2D, Iattackble
 {
     [Export] public float speed;
     [Export] public float atkValue;
     [Export] public float hp;
+    [Export] public AnimationPlayer hitFlasher;
+    [Export] public PackedScene atkLabel;
     public bool canMove = true;
+    List<Label> labels = new List<Label>();
     player player;
     Vector2 direction;
     public float Hp
@@ -53,9 +56,23 @@ public partial class enemyBase : CharacterBody2D, Iattackble
             MoveAndSlide();
         }
     }
-
-    public virtual void attacked()
+    public void showTheAtkValue()
     {
-        throw new NotImplementedException();
+        Label atkLabelNew = atkLabel.Instantiate() as Label;
+        atkLabelNew.Text = atkValue.ToString();
+        GetTree().CurrentScene.GetNode<Node2D>("playObjects").AddChild(atkLabelNew);
+        atkLabelNew.GlobalPosition = GetNode<Marker2D>("atkText").GlobalPosition;
+    }
+    public virtual void attacked(float trueDamage)
+    {
+        /* throw new NotImplementedException(); */
+        atkValue = trueDamage;
+        showTheAtkValue();
+        hitFlasher.Play("flash");
+        //GD.Print(111);
+    }
+    public void playRst()
+    {
+        hitFlasher.Play("RESET");
     }
 }

@@ -1,10 +1,12 @@
 using Godot;
-using System;
 
 public partial class Bullet : Area2D
 {
 	float rangeBlt = 1200;
-	float speed = 1000;
+	[Export] public float speed;
+	public float atkValue;
+	bool canAtk = true;
+	Godot.Collections.Array<Area2D> target;
 	float dis = 0;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -24,11 +26,17 @@ public partial class Bullet : Area2D
 	}
 	void attackObject(Area2D area2D)
 	{
-		Iattackble iattackble = area2D.GetParent<Iattackble>();
-		if (iattackble != null)
+		if (!canAtk) return;
+		canAtk = false;
+		target = GetOverlappingAreas();
+		if (target.Count > 0)
 		{
-			iattackble.attacked();
+			Iattackble iattackble = target[0].GetParent<Iattackble>();
+			if (iattackble != null)
+			{
+				iattackble.attacked(atkValue);
+			}
+			QueueFree();
 		}
-		QueueFree();
 	}
 }

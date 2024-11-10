@@ -1,10 +1,8 @@
-using Godot;
-using System;
-
 public partial class BlueBird : enemyBase
 {
-    public override void attacked()
+    public override void attacked(float trueDamage)
     {
-        Hp -= 1;
+        base.attacked(trueDamage);
+        Hp -= trueDamage;
     }
 }
