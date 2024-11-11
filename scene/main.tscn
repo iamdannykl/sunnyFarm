@@ -721,15 +721,20 @@ position = Vector2(-11, 10)
 position = Vector2(38, 157)
 
 [node name="Timer" type="Timer" parent="playObjects"]
+
+[node name="perLittleWave" type="Timer" parent="playObjects"]
+wait_time = 5.0
 autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
-offset_left = 8.0
-offset_top = -35.0
-offset_right = 51.0
-offset_bottom = -12.0
+offset_left = 210.0
+offset_top = 15.0
+offset_right = 359.0
+offset_bottom = 76.0
+theme_override_font_sizes/font_size = 40
 text = "Time:"
 
 [connection signal="timeout" from="playObjects/Timer" to="playObjects" method="spawnEntity"]
+[connection signal="timeout" from="playObjects/perLittleWave" to="playObjects" method="spawnPerLittleWave"]

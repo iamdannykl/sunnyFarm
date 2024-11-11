@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://cw80mv38t02qq"]
+
+[ext_resource type="Script" path="res://code/EnemyPanel.cs" id="1_2bht8"]
+[ext_resource type="Texture2D" uid="uid://bqi714nc4v3on" path="res://resources/Enemies/BlueBird/Flying (32x32).png" id="2_8i27c"]
+[ext_resource type="Texture2D" uid="uid://rsrsr4jmp82" path="res://resources/Enemies/AngryPig/Idle (36x30).png" id="3_86xjm"]
+[ext_resource type="Texture2D" uid="uid://c35ko1xqrtdpy" path="res://resources/Enemies/Ghost/Idle (44x30).png" id="4_pow35"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g26ny"]
+atlas = ExtResource("2_8i27c")
+region = Rect2(1, 5, 30, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fidbq"]
+atlas = ExtResource("3_86xjm")
+region = Rect2(2, 3, 33, 27)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ieewi"]
+atlas = ExtResource("4_pow35")
+region = Rect2(9, 3, 29, 27)
+
+[node name="enemyPanel" type="Panel" node_paths=PackedStringArray("optionButton", "checkButton", "num", "cirNum")]
+custom_minimum_size = Vector2(406, 190)
+offset_right = 406.0
+offset_bottom = 190.0
+script = ExtResource("1_2bht8")
+optionButton = NodePath("OptionButton")
+checkButton = NodePath("OptionButton/fnum/CheckButton")
+num = NodePath("OptionButton/num/LineEdit")
+cirNum = NodePath("OptionButton/Label3/LineEdit")
+texture2D = Array[Texture2D]([SubResource("AtlasTexture_g26ny"), SubResource("AtlasTexture_fidbq"), SubResource("AtlasTexture_ieewi")])
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 12.0
+offset_right = 158.0
+offset_bottom = 60.0
+icon_alignment = 1
+expand_icon = true
+
+[node name="num" type="Label" parent="OptionButton"]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 5.0
+offset_right = 235.0
+offset_bottom = 47.0
+theme_override_font_sizes/font_size = 30
+text = "Num:"
+
+[node name="LineEdit" type="LineEdit" parent="OptionButton/num"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = -2.0
+offset_right = 221.0
+offset_bottom = 44.0
+
+[node name="fnum" type="Label" parent="OptionButton"]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 56.0
+offset_right = 235.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 30
+text = "isFuc:"
+
+[node name="CheckButton" type="CheckButton" parent="OptionButton/fnum"]
+layout_mode = 0
+offset_left = 109.0
+offset_top = -4.0
+offset_right = 153.0
+offset_bottom = 20.0
+scale = Vector2(2.25137, 2.25137)
+
+[node name="Label3" type="Label" parent="OptionButton"]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 108.0
+offset_right = 235.0
+offset_bottom = 150.0
+theme_override_font_sizes/font_size = 30
+text = "FNum:"
+
+[node name="LineEdit" type="LineEdit" parent="OptionButton/Label3"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = -2.0
+offset_right = 221.0
+offset_bottom = 44.0
