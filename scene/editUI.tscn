@@ -74,13 +74,13 @@ offset_bottom = 73.0
 theme_override_font_sizes/font_size = 40
 text = "SAVE"
 
-[node name="CONFIRM" type="Button" parent="HSplitContainer/Panel"]
+[node name="BACK" type="Button" parent="HSplitContainer/Panel"]
 layout_mode = 0
 offset_left = 478.0
 offset_right = 662.0
 offset_bottom = 73.0
 theme_override_font_sizes/font_size = 40
-text = "CONFIRM"
+text = "BACK"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/Panel"]
 layout_mode = 1
@@ -97,4 +97,4 @@ layout_mode = 2
 [connection signal="item_selected" from="HSplitContainer/vSlct/wave" to="." method="setWaveNum"]
 [connection signal="item_selected" from="HSplitContainer/vSlct/litWave" to="." method="setLitWaveNum"]
 [connection signal="button_up" from="HSplitContainer/Panel/ADD" to="." method="addEnemy"]
-[connection signal="button_up" from="HSplitContainer/Panel/CONFIRM" to="." method="confirmIt"]
+[connection signal="button_up" from="HSplitContainer/Panel/SAVE" to="." method="finishIt"]

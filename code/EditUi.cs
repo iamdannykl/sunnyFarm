@@ -2,6 +2,8 @@ using Godot;
 using SunnyFarm.code;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using YamlDotNet.Serialization;
 
 public partial class EditUi : Control
 {
@@ -13,17 +15,33 @@ public partial class EditUi : Control
 	[Export] public VBoxContainer vBoxContainer;
 	[Export] public PackedScene enemyPanel;
 	[Export] public ItemList waveN, lWaveN;
+	public int WaveNum
+	{
+		get => waveNum;
+		set
+		{
+			confirmIt();
+			waveNum = value;
+			locateIt();
+		}
+	}
+	public int LitWaveNum
+	{
+		get => litWaveNum;
+		set
+		{
+			confirmIt();
+			litWaveNum = value;
+			locateIt();
+		}
+	}
 	public void setWaveNum(int idx)
 	{
-		waveNum = idx;
-		GD.PrintT(waveNum, litWaveNum);
-		locateIt();
+		WaveNum = idx;
 	}
 	public void setLitWaveNum(int idx)
 	{
-		litWaveNum = idx;
-		GD.PrintT(waveNum, litWaveNum);
-		locateIt();
+		LitWaveNum = idx;
 	}
 	void locateIt()
 	{
@@ -36,11 +54,12 @@ public partial class EditUi : Control
 		foreach (enemyType entity in gq.waves[waveNum].litWaves[litWaveNum].enemyTypes)
 		{
 			EnemyPanel newPanel = enemyPanel.Instantiate() as EnemyPanel;
+			vBoxContainer.AddChild(newPanel);
 			newPanel.num.Text = entity.num.ToString();
 			newPanel.checkButton.ButtonPressed = entity.isCircle;
 			newPanel.cirNum.Text = entity.circleNum.ToString();
 			newPanel.optionButton.Selected = (int)entity.type;
-			vBoxContainer.AddChild(newPanel);
+			GD.PrintT((int)entity.type, entity.type);
 		}
 	}
 	public void addEnemy()
@@ -55,13 +74,24 @@ public partial class EditUi : Control
 		gq.waves[waveNum].litWaves[litWaveNum].enemyTypes.Clear();
 		foreach (EnemyPanel enemyPanel in vBoxContainer.GetChildren())
 		{
+			int nm = 0;
+			int cirnm = 0;
+			if (enemyPanel.num.Text.Length > 0)
+			{
+				nm = enemyPanel.num.Text.ToInt();
+			}
+			if (enemyPanel.cirNum.Text.Length > 0)
+			{
+				cirnm = enemyPanel.cirNum.Text.ToInt();
+			}
 			gq.waves[waveNum].litWaves[litWaveNum].enemyTypes.Add(new enemyType()
 			{
-				num = enemyPanel.num.Text.ToInt(),
+				num = nm,
 				isCircle = enemyPanel.checkButton.ButtonPressed,
-				circleNum = enemyPanel.cirNum.Text.ToInt(),
+				circleNum = cirnm,
 				type = (enemyTypeEnum)enemyPanel.optionButton.Selected
 			});
+			GD.PrintT(enemyPanel.optionButton.Selected, (enemyTypeEnum)enemyPanel.optionButton.Selected);
 		}
 	}
 	public override void _Ready()
@@ -80,6 +110,11 @@ public partial class EditUi : Control
 
 	public void finishIt()
 	{
-
+		confirmIt();
+		string path = ProjectSettings.GlobalizePath("user://");
+		GD.Print(path);
+		var ser = new SerializerBuilder().Build();
+		string yamlStr = ser.Serialize(gq);
+		GD.Print(yamlStr);
 	}
 }
