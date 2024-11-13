@@ -3,6 +3,7 @@ using SunnyFarm.code;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using YamlDotNet.Serialization;
 
 public partial class EditUi : Control
@@ -101,9 +102,7 @@ public partial class EditUi : Control
 		GD.PrintT(waveN.ItemCount, lWaveN.ItemCount);
 		for (int i = 0; i < waveN.ItemCount; i++)
 		{
-			gq.waves.Add(new wave(
-
-			));
+			gq.waves.Add(new wave(1));
 		}
 		GD.Print(gq.waves.Count);
 	}
@@ -111,10 +110,27 @@ public partial class EditUi : Control
 	public void finishIt()
 	{
 		confirmIt();
-		string path = ProjectSettings.GlobalizePath("user://");
-		GD.Print(path);
 		var ser = new SerializerBuilder().Build();
 		string yamlStr = ser.Serialize(gq);
 		GD.Print(yamlStr);
+		string userDir = ProjectSettings.GlobalizePath("user://");
+		string folderPath = Path.Combine(userDir, "saveFolder");
+		if (!Directory.Exists(folderPath))
+		{
+			Directory.CreateDirectory(folderPath);
+			GD.Print("Folder created: " + folderPath);
+		}
+		else
+		{
+			GD.Print("Folder already exists: " + folderPath);
+		}
+		string realPath = Path.Combine(folderPath, "level.yaml");
+		if (File.Exists(realPath))
+		{
+			File.Delete(realPath);
+		}
+		StreamWriter sw = new StreamWriter(realPath);
+		sw.Write(yamlStr);
+		sw.Close();
 	}
 }

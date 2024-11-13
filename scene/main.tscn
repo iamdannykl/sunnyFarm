@@ -651,11 +651,13 @@ tile_set = ExtResource("2_8cblm")
 [node name="TileMapLayer2" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_8cblm")
 
-[node name="playObjects" type="Node2D" parent="."]
+[node name="playObjects" type="Node2D" parent="." node_paths=PackedStringArray("lastTime", "countdownTimer")]
 y_sort_enabled = true
 script = ExtResource("4_im854")
 enemy1 = ExtResource("6_fxihv")
 minSpawnDistance = 16.0
+lastTime = NodePath("../CanvasLayer/TimerLabel/TimeLast")
+countdownTimer = NodePath("eachSecond")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="playObjects"]
 position = Vector2(8, 8)
@@ -726,15 +728,75 @@ position = Vector2(38, 157)
 wait_time = 5.0
 autostart = true
 
+[node name="eachSecond" type="Timer" parent="playObjects"]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-offset_left = 210.0
-offset_top = 15.0
-offset_right = 359.0
-offset_bottom = 76.0
+[node name="TimerLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -217.0
+offset_top = -307.0
+offset_right = -111.0
+offset_bottom = -252.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Time:"
 
-[connection signal="timeout" from="playObjects/Timer" to="playObjects" method="spawnEntity"]
+[node name="TimeLast" type="Label" parent="CanvasLayer/TimerLabel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 63.0
+offset_top = -27.5
+offset_right = 169.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+
+[node name="nextWave" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/nextWave"]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 97.0
+offset_right = 1115.0
+offset_bottom = 473.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/nextWave/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/nextWave/Panel/ScrollContainer"]
+layout_mode = 2
+
+[node name="continue" type="Button" parent="CanvasLayer/nextWave"]
+layout_mode = 0
+offset_left = 892.0
+offset_top = 523.0
+offset_right = 1106.0
+offset_bottom = 614.0
+theme_override_font_sizes/font_size = 40
+text = "CONTINUE"
+
 [connection signal="timeout" from="playObjects/perLittleWave" to="playObjects" method="spawnPerLittleWave"]
+[connection signal="timeout" from="playObjects/eachSecond" to="playObjects" method="OnCountdownTick"]
+[connection signal="button_up" from="CanvasLayer/nextWave/continue" to="playObjects" method="enterNextWave"]
