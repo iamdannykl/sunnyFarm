@@ -31,30 +31,83 @@ layout_mode = 2
 
 [node name="wave" type="ItemList" parent="HSplitContainer/vSlct"]
 layout_mode = 2
+anchor_top = 0.100309
 anchor_right = 0.496552
-anchor_bottom = 1.0
+anchor_bottom = 0.876543
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 30
-item_count = 3
-item_0/text = "1"
-item_1/text = "2"
-item_2/text = "3"
 metadata/_edit_use_anchors_ = true
 
 [node name="litWave" type="ItemList" parent="HSplitContainer/vSlct"]
 layout_mode = 2
 anchor_left = 0.524138
+anchor_top = 0.100309
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.876543
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 30
-item_count = 3
-item_0/text = "1"
-item_1/text = "2"
-item_2/text = "3"
 metadata/_edit_use_anchors_ = true
+
+[node name="addWave" type="Button" parent="HSplitContainer/vSlct"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -76.0
+offset_right = -220.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+text = "ADD"
+
+[node name="addLitWave" type="Button" parent="HSplitContainer/vSlct"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 229.0
+offset_top = -76.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+text = "ADD"
+
+[node name="Panel" type="Panel" parent="HSplitContainer/vSlct"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="wave" type="Label" parent="HSplitContainer/vSlct/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = -219.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Wave"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="litWave" type="Label" parent="HSplitContainer/vSlct/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 217.0
+offset_right = -2.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "litWave"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Panel" type="Panel" parent="HSplitContainer"]
 layout_mode = 2
@@ -96,5 +149,7 @@ layout_mode = 2
 
 [connection signal="item_selected" from="HSplitContainer/vSlct/wave" to="." method="setWaveNum"]
 [connection signal="item_selected" from="HSplitContainer/vSlct/litWave" to="." method="setLitWaveNum"]
+[connection signal="button_up" from="HSplitContainer/vSlct/addWave" to="." method="addWave"]
+[connection signal="button_up" from="HSplitContainer/vSlct/addLitWave" to="." method="addLitWave"]
 [connection signal="button_up" from="HSplitContainer/Panel/ADD" to="." method="addEnemy"]
 [connection signal="button_up" from="HSplitContainer/Panel/SAVE" to="." method="finishIt"]

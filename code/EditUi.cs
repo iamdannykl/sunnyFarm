@@ -16,6 +16,7 @@ public partial class EditUi : Control
 	[Export] public VBoxContainer vBoxContainer;
 	[Export] public PackedScene enemyPanel;
 	[Export] public ItemList waveN, lWaveN;
+	int maxWaveNum,maxLitWaveNum;
 	public int WaveNum
 	{
 		get => waveNum;
@@ -23,7 +24,10 @@ public partial class EditUi : Control
 		{
 			confirmIt();
 			waveNum = value;
-			locateIt();
+			if (gq.waves[waveNum].litWaves.Count > 0)
+			{
+				locateIt();
+			}
 		}
 	}
 	public int LitWaveNum
@@ -36,21 +40,47 @@ public partial class EditUi : Control
 			locateIt();
 		}
 	}
+
+	public void addWave()
+	{
+		gq.waves.Add(new wave(1));
+		waveN.AddItem($"{++maxWaveNum}");
+	}
+
+	public void addLitWave()
+	{
+		if(waveNum==-1)return;
+		if(!waveN.IsSelected(waveNum))return;
+		gq.waves[waveNum].litWaves.Add(new litWave());
+		lWaveN.AddItem($"{gq.waves[waveNum].litWaves.Count}");
+	}
 	public void setWaveNum(int idx)
 	{
+		LitWaveNum = -1;
 		WaveNum = idx;
+		int litNum = gq.waves[waveNum].litWaves.Count;
+		foreach (var enemyData in vBoxContainer.GetChildren())
+		{
+			enemyData.QueueFree();
+		}//clear all items in Vbox
+		lWaveN.Clear();
+		for (int i = 0; i < litNum; i++)
+		{
+			lWaveN.AddItem($"{i+1}");
+		}
 	}
 	public void setLitWaveNum(int idx)
 	{
 		LitWaveNum = idx;
 	}
-	void locateIt()
+	void locateIt()//显示
 	{
 		if (waveNum == -1 || litWaveNum == -1) return;
 		foreach (var enemyData in vBoxContainer.GetChildren())
 		{
 			enemyData.QueueFree();
 		}//clear all items in Vbox
+		GD.Print($"wave,litwave:{waveNum}{litWaveNum}");
 		if (gq.waves[waveNum].litWaves[litWaveNum].enemyTypes.Count <= 0) return;
 		foreach (enemyType entity in gq.waves[waveNum].litWaves[litWaveNum].enemyTypes)
 		{
@@ -72,7 +102,9 @@ public partial class EditUi : Control
 	public void confirmIt()
 	{
 		if (waveNum == -1 || litWaveNum == -1) return;
+		GD.Print($"lit{litWaveNum} wave:{waveNum}");
 		gq.waves[waveNum].litWaves[litWaveNum].enemyTypes.Clear();
+		if(vBoxContainer.GetChildren().Count<=0)return;
 		foreach (EnemyPanel enemyPanel in vBoxContainer.GetChildren())
 		{
 			int nm = 0;
@@ -99,9 +131,13 @@ public partial class EditUi : Control
 	{
 		Instance = this;
 		gq = new guanQia();
-		GD.PrintT(waveN.ItemCount, lWaveN.ItemCount);
+		loadWave();
+	}
+
+	void loadWave()
+	{
 		for (int i = 0; i < waveN.ItemCount; i++)
-		{
+		{ 
 			gq.waves.Add(new wave(1));
 		}
 		GD.Print(gq.waves.Count);
