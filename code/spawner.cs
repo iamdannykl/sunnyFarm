@@ -1,6 +1,6 @@
 using Godot;
-using Microsoft.VisualBasic.FileIO;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using YamlDotNet.Serialization;
@@ -14,9 +14,11 @@ enemyTypeEnum
 }
 public partial class spawner : Node2D
 {
+	public static spawner Instance;
 	[Export] public PackedScene enemy1;
 	[Export] private float minSpawnDistance;
 	[Export] public Label lastTime;
+	public List<enemyBase> enemies=new List<enemyBase>();
 	private Node2D zx, ys;
 	Random random = new Random();
 	private float xJL, yJL;
@@ -31,6 +33,7 @@ public partial class spawner : Node2D
 	private int crtLitWaveNum;
 	public override void _Ready()
 	{
+		Instance = this;
 		zx = GetTree().CurrentScene.GetNode<Node2D>("land/zx");
 		ys = GetTree().CurrentScene.GetNode<Node2D>("land/ys");
 		xJL = (ys.GlobalPosition - zx.GlobalPosition).X;
@@ -61,7 +64,7 @@ public partial class spawner : Node2D
 
 	void OnCountdownTick()
 	{
-		if (countdown % 12 == 0)
+		if (countdown % 5 == 0)
 		{
 			OnMethodCall();
 		}
@@ -76,16 +79,17 @@ public partial class spawner : Node2D
 	}
 	void OnMethodCall()
 	{
+		crtLitWaveNum = 0;
 		foreach (enemyType ene in currentWave.litWaves[crtLitWaveNum++].enemyTypes)
 		{
 			for (int i = 0; i < ene.num; i++)
 			{
-				spawnEntity();
+				spawnEntity(ene.type);
 			}
 		}
 	}
 
-	async void startSpawn()
+	/*async void startSpawn()
 	{
 		foreach (litWave lwv in currentWave.litWaves)
 		{
@@ -99,13 +103,34 @@ public partial class spawner : Node2D
 			await Task.Delay(5000);
 		}
 		finishThisWave();
-	}
+	}*/
 	public void finishThisWave()
 	{
+		if (crtWaveNum >= level.waves.Count - 1)
+		{
+			nextWavePanel.GetNode<Button>("continue").Visible = false;
+			nextWavePanel.GetNode<Button>("finish").Visible = true;
+		}
+
+		foreach (enemyBase ene in enemies)
+		{
+			try
+			{
+				ene.QueueFree(); //add a lock
+			}
+			catch (Exception e)
+			{
+				GD.Print(e);
+			}
+		}
 		nextWavePanel.Visible = true;
 	}
 	public void enterNextWave()
 	{
+		if (crtWaveNum >= level.waves.Count - 1)
+		{
+			return;
+		}
 		nextWavePanel.Visible = false;
 		crtWaveNum++;
 		currentWave = level.waves[crtWaveNum];
@@ -114,11 +139,14 @@ public partial class spawner : Node2D
 		lastTime.Text = countdown.ToString();
 		countdownTimer.Start();
 	}
-	
-
-	public void spawnEntity()
+	public void finishTheGame()
 	{
-		enemyBase enemyNew = enemy1.Instantiate() as enemyBase;
+		GetTree().Quit();
+	}
+	public void spawnEntity(enemyTypeEnum type)
+	{
+		PackedScene enemyType = MatchIt.Instance.matchEnemy(type);
+		enemyBase enemyNew = enemyType.Instantiate() as enemyBase;
 		AddChild(enemyNew);
 		currentPos = zx.GlobalPosition + new Vector2(xJL * random.NextSingle(), yJL * random.NextSingle());
 		int num = 0;
@@ -128,5 +156,6 @@ public partial class spawner : Node2D
 			num++;
 		}
 		enemyNew.GlobalPosition = currentPos;
+		enemies.Add(enemyNew);
 	}
 }

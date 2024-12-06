@@ -20,9 +20,15 @@ public partial class enemyBase : CharacterBody2D, Iattackble
             hp = value;
             if (hp <= 0)
             {
-                QueueFree();
+                desSelf();
             }
         }
+    }
+
+    public void desSelf()
+    {
+        spawner.Instance.enemies.Remove(this);
+        QueueFree();
     }
     public override void _Ready()
     {
@@ -49,12 +55,10 @@ public partial class enemyBase : CharacterBody2D, Iattackble
     }
     public override void _PhysicsProcess(double delta)
     {
-        if (canMove)
-        {
-            direction = GlobalPosition.DirectionTo(player.GlobalPosition);
-            Velocity = direction * speed;
-            MoveAndSlide();
-        }
+        if (!canMove) return;
+        direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+        Velocity = direction * speed;
+        MoveAndSlide();
     }
     public void showTheAtkValue()
     {

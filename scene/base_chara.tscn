@@ -1,9 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://ckdy6r52ifnlj"]
+[gd_scene load_steps=14 format=3 uid="uid://1dfdd512d411"]
 
-[ext_resource type="Texture2D" uid="uid://bqi714nc4v3on" path="res://resources/Enemies/BlueBird/Flying (32x32).png" id="1_1koac"]
-[ext_resource type="Script" path="res://code/BlueBird.cs" id="1_c6fjm"]
-[ext_resource type="Shader" uid="uid://cwonxegibkw04" path="res://scene/blueBird.tres" id="2_bgb8q"]
-[ext_resource type="PackedScene" uid="uid://vylk4t7bbscb" path="res://scene/atk_label.tscn" id="2_rbjlo"]
+[ext_resource type="Script" path="res://code/BlueBird.cs" id="1_0fmmd"]
+[ext_resource type="PackedScene" uid="uid://vylk4t7bbscb" path="res://scene/atk_label.tscn" id="2_0y7tf"]
+[ext_resource type="Shader" uid="uid://cwonxegibkw04" path="res://scene/blueBird.tres" id="2_lf0wb"]
+[ext_resource type="Texture2D" uid="uid://bqi714nc4v3on" path="res://resources/Enemies/BlueBird/Flying (32x32).png" id="4_s8yjy"]
 
 [sub_resource type="Animation" id="Animation_1wmxq"]
 length = 0.001
@@ -116,9 +116,9 @@ _data = {
 "idle": SubResource("Animation_35aep")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_o3qq7"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2qgio"]
 resource_local_to_scene = true
-shader = ExtResource("2_bgb8q")
+shader = ExtResource("2_lf0wb")
 shader_parameter/BooleanParameter = false
 shader_parameter/ColorParameter = Color(1, 1, 1, 1)
 
@@ -227,13 +227,13 @@ _data = {
 "flash": SubResource("Animation_q4gt5")
 }
 
-[node name="blueBird" type="CharacterBody2D" node_paths=PackedStringArray("hitFlasher")]
+[node name="baseChara" type="CharacterBody2D" node_paths=PackedStringArray("hitFlasher")]
 collision_layer = 4
-script = ExtResource("1_c6fjm")
+script = ExtResource("1_0fmmd")
 speed = 35.0
 hp = 5.0
 hitFlasher = NodePath("hitFlasher")
-atkLabel = ExtResource("2_rbjlo")
+atkLabel = ExtResource("2_0y7tf")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -242,9 +242,9 @@ libraries = {
 autoplay = "idle"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_o3qq7")
+material = SubResource("ShaderMaterial_2qgio")
 position = Vector2(-4, 0)
-texture = ExtResource("1_1koac")
+texture = ExtResource("4_s8yjy")
 hframes = 9
 region_enabled = true
 region_rect = Rect2(0, -1, 288, 33)

@@ -1,4 +1,4 @@
 public interface Iattackble
 {
-    public abstract void attacked(float trueDamage);
+    public void attacked(float trueDamage);
 }

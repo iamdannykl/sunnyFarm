@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://dhhld26l4kghn"]
+[gd_scene load_steps=26 format=4 uid="uid://dhhld26l4kghn"]
 
 [ext_resource type="Texture2D" uid="uid://5vmsdvfl2p88" path="res://resources/Tiny Wonder Forest 1.0/tilemaps/spring tilemap.png" id="1_6pij1"]
 [ext_resource type="TileSet" uid="uid://cwiqqys5h605s" path="res://scene/buildings.tres" id="2_8cblm"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ju2iihuohobq" path="res://scene/tutu_gun.tscn" id="6_aa2ww"]
 [ext_resource type="PackedScene" uid="uid://ckdy6r52ifnlj" path="res://scene/blueBird.tscn" id="6_fxihv"]
 [ext_resource type="PackedScene" uid="uid://bsbyl3rpv1cl2" path="res://scene/short_gun.tscn" id="9_0aiqc"]
+[ext_resource type="Script" path="res://code/MatchIt.cs" id="11_w7swr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dn0ki"]
 texture = ExtResource("1_6pij1")
@@ -797,6 +798,22 @@ offset_bottom = 614.0
 theme_override_font_sizes/font_size = 40
 text = "CONTINUE"
 
+[node name="finish" type="Button" parent="CanvasLayer/nextWave"]
+visible = false
+layout_mode = 0
+offset_left = 892.0
+offset_top = 523.0
+offset_right = 1106.0
+offset_bottom = 614.0
+theme_override_font_sizes/font_size = 40
+text = "FINISH
+"
+
+[node name="matchIt" type="Node" parent="."]
+script = ExtResource("11_w7swr")
+blueBird = ExtResource("6_fxihv")
+
 [connection signal="timeout" from="playObjects/perLittleWave" to="playObjects" method="spawnPerLittleWave"]
 [connection signal="timeout" from="playObjects/eachSecond" to="playObjects" method="OnCountdownTick"]
 [connection signal="button_up" from="CanvasLayer/nextWave/continue" to="playObjects" method="enterNextWave"]
+[connection signal="button_up" from="CanvasLayer/nextWave/finish" to="playObjects" method="finishTheGame"]
