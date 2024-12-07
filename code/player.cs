@@ -7,6 +7,7 @@ public partial class player : CharacterBody2D
 	AnimationPlayer animationPlayer;
 	bool isRt;
 	Vector2 direction;
+	public float atkBuff;
 	public override void _Ready()
 	{
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");

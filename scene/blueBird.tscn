@@ -228,9 +228,10 @@ _data = {
 }
 
 [node name="blueBird" type="CharacterBody2D" node_paths=PackedStringArray("hitFlasher")]
+scale = Vector2(0.75, 0.75)
 collision_layer = 4
 script = ExtResource("1_c6fjm")
-speed = 35.0
+speed = 25.0
 hp = 5.0
 hitFlasher = NodePath("hitFlasher")
 atkLabel = ExtResource("2_rbjlo")

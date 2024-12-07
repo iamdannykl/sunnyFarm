@@ -27,10 +27,12 @@ public partial class spawner : Node2D
 	wave currentWave;
 	int crtWaveNum;
 	private Panel nextWavePanel;
+	[Export] public PackedScene redX;
 	
 	[Export]Timer countdownTimer;
 	private int countdown; // 倒计时
 	private int crtLitWaveNum;
+	public Queue<enemyTypeEnum> types = new();
 	public override void _Ready()
 	{
 		Instance = this;
@@ -54,6 +56,7 @@ public partial class spawner : Node2D
 			var deSer = new DeserializerBuilder().Build();
 			level = deSer.Deserialize<guanQia>(yamlStr);
 			currentWave = level.waves[crtWaveNum];
+			GD.Print($"1-2 type:{level.waves[0].litWaves[1].enemyTypes[0].type}");
 			GD.Print($"level.waves.Count:{level.waves.Count}");
 		}
 
@@ -79,11 +82,11 @@ public partial class spawner : Node2D
 	}
 	void OnMethodCall()
 	{
-		crtLitWaveNum = 0;
 		foreach (enemyType ene in currentWave.litWaves[crtLitWaveNum++].enemyTypes)
 		{
 			for (int i = 0; i < ene.num; i++)
 			{
+				GD.Print($"type:{ene.type}crtLitWaveNum:{crtLitWaveNum}");
 				spawnEntity(ene.type);
 			}
 		}
@@ -134,7 +137,7 @@ public partial class spawner : Node2D
 		nextWavePanel.Visible = false;
 		crtWaveNum++;
 		currentWave = level.waves[crtWaveNum];
-		
+		crtLitWaveNum = 0;
 		countdown = currentWave.litWaves.Count * 5;
 		lastTime.Text = countdown.ToString();
 		countdownTimer.Start();
@@ -145,9 +148,8 @@ public partial class spawner : Node2D
 	}
 	public void spawnEntity(enemyTypeEnum type)
 	{
-		PackedScene enemyType = MatchIt.Instance.matchEnemy(type);
-		enemyBase enemyNew = enemyType.Instantiate() as enemyBase;
-		AddChild(enemyNew);
+		types.Enqueue(type);
+		Sprite2D redCross=redX.Instantiate() as Sprite2D;
 		currentPos = zx.GlobalPosition + new Vector2(xJL * random.NextSingle(), yJL * random.NextSingle());
 		int num = 0;
 		while (lastPos.DistanceTo(currentPos) <= minSpawnDistance && num <= 3)
@@ -155,7 +157,13 @@ public partial class spawner : Node2D
 			currentPos = zx.GlobalPosition + new Vector2(xJL * random.NextSingle(), yJL * random.NextSingle());
 			num++;
 		}
-		enemyNew.GlobalPosition = currentPos;
-		enemies.Add(enemyNew);
+		if (redCross == null) return;
+		redCross.GlobalPosition = currentPos;
+		AddChild(redCross);
+	}
+
+	public void outQueue()
+	{
+		
 	}
 }

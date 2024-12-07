@@ -29,7 +29,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(0, -1, 288, 33)]
+"values": [Rect2(0, 0, 440, 30)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -41,7 +41,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [9]
+"values": [10]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -58,7 +58,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_35aep"]
 resource_name = "idle"
-length = 1.6
+length = 2.0
 loop_mode = 1
 step = 0.2
 tracks/0/type = "value"
@@ -83,7 +83,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(0, -1, 288, 33)]
+"values": [Rect2(0, 0, 440, 30)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -95,7 +95,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [9]
+"values": [10]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -104,10 +104,10 @@ tracks/3/path = NodePath("Sprite2D:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u1s1e"]
@@ -228,10 +228,11 @@ _data = {
 }
 
 [node name="ghost" type="CharacterBody2D" node_paths=PackedStringArray("hitFlasher")]
+scale = Vector2(0.75, 0.75)
 collision_layer = 4
 script = ExtResource("1_uy2ph")
-speed = 50.0
-hp = 4.0
+speed = 35.0
+hp = 8.0
 hitFlasher = NodePath("hitFlasher")
 atkLabel = ExtResource("2_taesm")
 
@@ -245,9 +246,9 @@ autoplay = "idle"
 material = SubResource("ShaderMaterial_idjji")
 position = Vector2(-4, 0)
 texture = ExtResource("4_0yvj0")
-hframes = 9
+hframes = 10
 region_enabled = true
-region_rect = Rect2(0, -1, 288, 33)
+region_rect = Rect2(0, 0, 440, 30)
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4
