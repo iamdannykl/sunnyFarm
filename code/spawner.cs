@@ -166,4 +166,9 @@ public partial class spawner : Node2D
 	{
 		
 	}
+
+	public void AddChild(Area2D area,bool chk)
+	{
+		AddChild(area);
+	}
 }

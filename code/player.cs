@@ -2,6 +2,7 @@ using Godot;
 
 public partial class player : CharacterBody2D
 {
+	public static player Instance;
 	[Export] public float Speed;
 	public const float JumpVelocity = -400.0f;
 	AnimationPlayer animationPlayer;
@@ -10,6 +11,7 @@ public partial class player : CharacterBody2D
 	public float atkBuff;
 	public override void _Ready()
 	{
+		Instance = this;
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 

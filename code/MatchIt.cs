@@ -12,6 +12,8 @@ public partial class MatchIt : Node
 	[Export] private PackedScene angryPig;
 
 	[Export] private PackedScene ghost;
+
+	[Export] public PackedScene coin;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

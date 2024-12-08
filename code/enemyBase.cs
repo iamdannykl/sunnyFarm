@@ -7,6 +7,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
     [Export] public float atkValue;
     [Export] public float hp;
     [Export] public AnimationPlayer hitFlasher;
+    [Export] public AnimationPlayer explodeAnim;
     [Export] public PackedScene atkLabel;
     public bool canMove = true;
     List<Label> labels = new List<Label>();
@@ -20,15 +21,26 @@ public partial class enemyBase : CharacterBody2D, Iattackble
             hp = value;
             if (hp <= 0)
             {
-                desSelf();
+                crtCoin();
+                explodeAnim.Play("explode");
             }
         }
     }
-
     public void desSelf()
     {
         spawner.Instance.enemies.Remove(this);
         QueueFree();
+    }
+
+    public void crtCoin()
+    {
+        Area2D coinNew=MatchIt.Instance.coin.Instantiate() as Area2D;
+        if (coinNew != null)
+        {
+            coinNew.GlobalPosition = GlobalPosition;
+            //spawner.Instance.AddChild(coinNew);
+            (spawner.Instance as Node2D).CallDeferred("AddChild", coinNew,true);
+        }
     }
     public override void _Ready()
     {

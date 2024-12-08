@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://lw7r61tga7pu"]
+
+[ext_resource type="Texture2D" uid="uid://bgn3c8xrj5yvj" path="res://resources/brackeys_platformer_assets/sprites/fruit.png" id="1_jh76o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2iga"]
+atlas = ExtResource("1_jh76o")
+region = Rect2(2, 18, 11, 13)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0mgb2"]
+
+[node name="testNode" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_b2iga")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0mgb2")
