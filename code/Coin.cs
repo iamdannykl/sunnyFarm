@@ -3,7 +3,7 @@ using System;
 
 public partial class Coin : Area2D
 {
-	[Export]public float spd;
+	[Export] public float spd;
 	Vector2 direction;
 	public bool canMove;
 	player playerTarget;
@@ -16,9 +16,9 @@ public partial class Coin : Area2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if(!canMove)return;
+		if (!canMove) return;
 		direction = GlobalPosition.DirectionTo(playerTarget.GlobalPosition);
-		GlobalPosition+=spd*direction*(float)delta;
+		GlobalPosition += spd * direction * (float)delta;
 	}
 
 	public void flyToPlayer(Area2D player)
@@ -31,6 +31,7 @@ public partial class Coin : Area2D
 				break;
 			case 32:
 				canMove = false;
+				playerTarget.MoneyValue += 1;
 				QueueFree();
 				break;
 		}

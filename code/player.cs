@@ -1,18 +1,29 @@
 using Godot;
-
 public partial class player : CharacterBody2D
 {
 	public static player Instance;
 	[Export] public float Speed;
+	[Export] public Label moneyShow;
 	public const float JumpVelocity = -400.0f;
 	AnimationPlayer animationPlayer;
 	bool isRt;
 	Vector2 direction;
+	public int moneyValue;
 	public float atkBuff;
+	public int MoneyValue
+	{
+		get => moneyValue;
+		set
+		{
+			moneyShow.Text = $"Money:{value}";
+			moneyValue = value;
+		}
+	}
 	public override void _Ready()
 	{
 		Instance = this;
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		moneyShow = GetTree().CurrentScene.GetNode<Label>("CanvasLayer/showMoney");
 	}
 
 	public override void _PhysicsProcess(double delta)

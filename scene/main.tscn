@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://dhhld26l4kghn"]
+[gd_scene load_steps=37 format=4 uid="uid://dhhld26l4kghn"]
 
 [ext_resource type="Texture2D" uid="uid://5vmsdvfl2p88" path="res://resources/Tiny Wonder Forest 1.0/tilemaps/spring tilemap.png" id="1_6pij1"]
 [ext_resource type="TileSet" uid="uid://cwiqqys5h605s" path="res://scene/buildings.tres" id="2_8cblm"]
@@ -14,9 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://4fht0i1igi65" path="res://resources/sprite/item/hall_c/item _21.png" id="11_e027f"]
 [ext_resource type="Script" path="res://code/MatchIt.cs" id="11_w7swr"]
 [ext_resource type="Texture2D" uid="uid://bi4t7vibrtpfu" path="res://resources/sprite/item/hall_b/item-34.png" id="12_1ink0"]
+[ext_resource type="PackedScene" uid="uid://l25siv5de70n" path="res://scene/flamethrower.tscn" id="12_xh64b"]
 [ext_resource type="PackedScene" uid="uid://bewql7fesr4sx" path="res://scene/ghost.tscn" id="12_ybdao"]
 [ext_resource type="Texture2D" uid="uid://b4d5qwui0onqy" path="res://resources/sprite/item/hall_c/item _25.png" id="13_q8wqb"]
+[ext_resource type="Script" path="res://code/ShowFps.cs" id="15_ahdy4"]
 [ext_resource type="PackedScene" uid="uid://b25vrjqvje8m8" path="res://scene/coin.tscn" id="17_p63fr"]
+[ext_resource type="PackedScene" uid="uid://cxerjmrmly5t8" path="res://scene/bullet.tscn" id="19_xphig"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dn0ki"]
 texture = ExtResource("1_6pij1")
@@ -717,6 +720,8 @@ position = Vector2(14, -1)
 [node name="Marker2D3" type="Marker2D" parent="playObjects/CharacterBody2D/markers"]
 position = Vector2(14, 10)
 
+[node name="Flamethrower" parent="playObjects/CharacterBody2D/markers/Marker2D3" instance=ExtResource("12_xh64b")]
+
 [node name="Marker2D4" type="Marker2D" parent="playObjects/CharacterBody2D/markers"]
 position = Vector2(-11, -10)
 
@@ -738,11 +743,11 @@ collision_mask = 0
 shape = SubResource("CircleShape2D_boj0m")
 debug_color = Color(0.978476, 0, 0.395874, 0.42)
 
-[node name="Area2D" type="Area2D" parent="playObjects/CharacterBody2D"]
+[node name="clct" type="Area2D" parent="playObjects/CharacterBody2D"]
 collision_layer = 32
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="playObjects/CharacterBody2D/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="playObjects/CharacterBody2D/clct"]
 position = Vector2(1, 2)
 shape = SubResource("CircleShape2D_pqkfa")
 debug_color = Color(0.692719, 0.49652, 0, 0.42)
@@ -752,9 +757,6 @@ position = Vector2(1, 6)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_6boch")
 debug_color = Color(0.754353, 0.000176062, 0.67197, 0.42)
-
-[node name="Sprite2D" parent="playObjects" instance=ExtResource("2_cp7se")]
-position = Vector2(38, 157)
 
 [node name="Timer" type="Timer" parent="playObjects"]
 
@@ -767,17 +769,13 @@ autostart = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="TimerLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -217.0
-offset_top = -307.0
-offset_right = -111.0
-offset_bottom = -252.0
+offset_left = -53.0
+offset_right = 53.0
+offset_bottom = 55.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Time:"
 
@@ -1305,11 +1303,30 @@ text = "Shop"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="showFps" type="Label" parent="CanvasLayer"]
+offset_right = 93.0
+offset_bottom = 49.0
+theme_override_font_sizes/font_size = 35
+text = "FPS:"
+script = ExtResource("15_ahdy4")
+
+[node name="showMoney" type="Label" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -144.0
+offset_bottom = 49.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 35
+text = "Money:0"
+
 [node name="matchIt" type="Node" parent="."]
 script = ExtResource("11_w7swr")
 blueBird = ExtResource("6_fxihv")
 ghost = ExtResource("12_ybdao")
 coin = ExtResource("17_p63fr")
+fire = ExtResource("19_xphig")
+normalBlt = ExtResource("19_xphig")
 
 [connection signal="timeout" from="playObjects/perLittleWave" to="playObjects" method="spawnPerLittleWave"]
 [connection signal="timeout" from="playObjects/eachSecond" to="playObjects" method="OnCountdownTick"]

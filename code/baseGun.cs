@@ -1,9 +1,14 @@
 using Godot;
 using System;
-
+public enum bulletType
+{
+    normal,
+    fire
+}
 public partial class baseGun : Area2D
 {
     [Export] public PackedScene blt;
+    [Export] public bulletType btp;
     [Export] public float atkValue;
     Sprite2D gunImage;
     Godot.Collections.Array<Area2D> enemyList;
@@ -37,7 +42,7 @@ public partial class baseGun : Area2D
         if (enemyList.Count > 0)
         {
             GetNode<AudioStreamPlayer>("AudioStreamPlayer").Play();
-            Bullet bltNew = blt.Instantiate() as Bullet;
+            Bullet bltNew = MatchIt.Instance.matchBullet(btp).Instantiate() as Bullet;
             bltNew.atkValue = atkValue;
             AddChild(bltNew);
             //GD.Print(Zaodian.Instance.GetNoiseBasedPosition(GlobalPosition, 0.3f));

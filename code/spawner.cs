@@ -18,7 +18,7 @@ public partial class spawner : Node2D
 	[Export] public PackedScene enemy1;
 	[Export] private float minSpawnDistance;
 	[Export] public Label lastTime;
-	public List<enemyBase> enemies=new List<enemyBase>();
+	public List<enemyBase> enemies = new List<enemyBase>();
 	private Node2D zx, ys;
 	Random random = new Random();
 	private float xJL, yJL;
@@ -28,8 +28,8 @@ public partial class spawner : Node2D
 	int crtWaveNum;
 	private Panel nextWavePanel;
 	[Export] public PackedScene redX;
-	
-	[Export]Timer countdownTimer;
+
+	[Export] Timer countdownTimer;
 	private int countdown; // 倒计时
 	private int crtLitWaveNum;
 	public Queue<enemyTypeEnum> types = new();
@@ -41,7 +41,7 @@ public partial class spawner : Node2D
 		xJL = (ys.GlobalPosition - zx.GlobalPosition).X;
 		yJL = (ys.GlobalPosition - zx.GlobalPosition).Y;
 		lastPos = Vector2.Zero;
-		nextWavePanel =GetTree().CurrentScene.GetNode("CanvasLayer/nextWave") as Panel;
+		nextWavePanel = GetTree().CurrentScene.GetNode("CanvasLayer/nextWave") as Panel;
 		readAndStart();
 	}
 	void readAndStart()
@@ -149,7 +149,7 @@ public partial class spawner : Node2D
 	public void spawnEntity(enemyTypeEnum type)
 	{
 		types.Enqueue(type);
-		Sprite2D redCross=redX.Instantiate() as Sprite2D;
+		Sprite2D redCross = redX.Instantiate() as Sprite2D;
 		currentPos = zx.GlobalPosition + new Vector2(xJL * random.NextSingle(), yJL * random.NextSingle());
 		int num = 0;
 		while (lastPos.DistanceTo(currentPos) <= minSpawnDistance && num <= 3)
@@ -164,10 +164,10 @@ public partial class spawner : Node2D
 
 	public void outQueue()
 	{
-		
+
 	}
 
-	public void AddChild(Area2D area,bool chk)
+	public void AddChild(Area2D area, bool chk)
 	{
 		AddChild(area);
 	}

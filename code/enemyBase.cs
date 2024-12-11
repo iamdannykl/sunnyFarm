@@ -13,6 +13,8 @@ public partial class enemyBase : CharacterBody2D, Iattackble
     List<Label> labels = new List<Label>();
     player player;
     Vector2 direction;
+    Sprite2D sprite2D;
+    bool hasDropCoin;
     public float Hp
     {
         get => hp;
@@ -34,17 +36,20 @@ public partial class enemyBase : CharacterBody2D, Iattackble
 
     public void crtCoin()
     {
-        Area2D coinNew=MatchIt.Instance.coin.Instantiate() as Area2D;
+        if (hasDropCoin) return;
+        hasDropCoin = true;
+        Area2D coinNew = MatchIt.Instance.coin.Instantiate() as Area2D;
         if (coinNew != null)
         {
             coinNew.GlobalPosition = GlobalPosition;
             //spawner.Instance.AddChild(coinNew);
-            (spawner.Instance as Node2D).CallDeferred("AddChild", coinNew,true);
+            spawner.Instance.CallDeferred("AddChild", coinNew, true);
         }
     }
     public override void _Ready()
     {
         player = GetTree().CurrentScene.GetNode<player>("playObjects/CharacterBody2D");
+        sprite2D = GetNode<Sprite2D>("Sprite2D");
         GD.Print("get" + player.Name);
     }
     public void fbdMove(Node2D playerColl)
@@ -69,6 +74,14 @@ public partial class enemyBase : CharacterBody2D, Iattackble
     {
         if (!canMove) return;
         direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+        if (direction.X < 0)
+        {
+            sprite2D.FlipH = false;
+        }
+        else if (direction.X > 0)
+        {
+            sprite2D.FlipH = true;
+        }
         Velocity = direction * speed;
         MoveAndSlide();
     }
