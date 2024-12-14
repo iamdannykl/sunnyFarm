@@ -12,7 +12,7 @@ collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_mjruv")
 btp = 1
-atkValue = 1.0
+atkValue = 2.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_cwxwy")
@@ -27,4 +27,9 @@ autostart = true
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_2nhp0")
 
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(8, 0)
+
+[connection signal="area_entered" from="." to="." method="addEnemy"]
+[connection signal="area_exited" from="." to="." method="removeEnemy"]
 [connection signal="timeout" from="Timer" to="." method="shootIt"]

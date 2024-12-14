@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 
+namespace SunnyFarm.code;
+
 public class guanQia
 {
-    public List<wave> waves = new List<wave>();
+    public List<wave> waves = new();
 }

@@ -1,3 +1,5 @@
+namespace SunnyFarm.code;
+
 public class enemyType
 {
     public enemyTypeEnum type;

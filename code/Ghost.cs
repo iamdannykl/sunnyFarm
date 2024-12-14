@@ -1,3 +1,5 @@
+namespace SunnyFarm.code;
+
 public partial class Ghost : enemyBase
 {
     public override void attacked(float trueDamage)

@@ -1,71 +1,134 @@
+using System;
+using System.Collections.Generic;
 using Godot;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
+
+namespace SunnyFarm.code;
+
 public partial class player : CharacterBody2D
 {
-	public static player Instance;
-	[Export] public float Speed;
-	[Export] public Label moneyShow;
-	public const float JumpVelocity = -400.0f;
-	AnimationPlayer animationPlayer;
-	bool isRt;
-	Vector2 direction;
-	public int moneyValue;
-	public float atkBuff;
-	public int MoneyValue
-	{
-		get => moneyValue;
-		set
-		{
-			moneyShow.Text = $"Money:{value}";
-			moneyValue = value;
-		}
-	}
-	public override void _Ready()
-	{
-		Instance = this;
-		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-		moneyShow = GetTree().CurrentScene.GetNode<Label>("CanvasLayer/showMoney");
-	}
+    public static player Instance;
 
-	public override void _PhysicsProcess(double delta)
-	{
-		direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-		if (direction != Vector2.Zero)
-		{
-			if (direction.X < 0)
-			{
-				animationPlayer.Play("lftWalk");
-				isRt = false;
-			}
-			else if (direction.X > 0)
-			{
-				animationPlayer.Play("rtWalk");
-				isRt = true;
-			}
-			else
-			{
-				if (isRt)
-				{
-					animationPlayer.Play("rtWalk");
-				}
-				else
-				{
-					animationPlayer.Play("lftWalk");
-				}
-			}
-			Velocity = Speed * direction;
-		}
-		else
-		{
-			if (isRt)
-			{
-				animationPlayer.Play("rtIdle");
-			}
-			else
-			{
-				animationPlayer.Play("lftIdle");
-			}
-			Velocity = Vector2.Zero;
-		}
-		MoveAndSlide();
-	}
+    [ExportCategory("valueDatas")] [Export]
+    public float hp;
+
+    [Export] public float atk;
+    [Export] public float def;
+    [Export] public float speed;
+    [Export] public float range;
+    [Export] public float spAtk;
+    [Export] public float luckyValue;
+    [Export] public float drain;
+    [Export] public float regeneration;
+    public List<float> ValuesList = new();
+
+    [ExportCategory("normalValues")] [Export]
+    public float Speed;
+
+    [Export] public CollisionShape2D collisionShape2D;
+    public Label moneyShow;
+    public const float JumpVelocity = -400.0f;
+    private AnimationPlayer animationPlayer;
+    private bool isRt;
+    private Vector2 direction;
+    public int moneyValue;
+    public float atkBuff;
+    private float pickRadius;
+
+    public ObservableDictionary<valueDataEnum, float> values;
+    [Export] private mainProperty zhuShuXing;
+
+    public int MoneyValue
+    {
+        get => moneyValue;
+        set
+        {
+            moneyShow.Text = $"Money:{value}";
+            moneyValue = value;
+        }
+    }
+
+    public override void _Ready()
+    {
+        Instance = this;
+        pickRadius = (float)collisionShape2D.Shape.Get("radius");
+        ValuesList.Add(hp);
+        ValuesList.Add(atk);
+        ValuesList.Add(def);
+        ValuesList.Add(speed);
+        ValuesList.Add(range);
+        ValuesList.Add(spAtk);
+        ValuesList.Add(luckyValue);
+        ValuesList.Add(drain);
+        ValuesList.Add(regeneration);
+        values = new ObservableDictionary<valueDataEnum, float>();
+        /*foreach (var VARIABLE in values)
+        {
+            zhuShuXing.AddItem($"{VARIABLE.Key}: {VARIABLE.Value}");
+            GD.Print($"has added {values.Count}");
+        }*/
+
+        // 订阅事件
+        values.OnItemAdded += (key, value, isFst)
+            =>
+        {
+            GD.Print($"Key '{key}' added with value {value}");
+            if (!isFst)
+                zhuShuXing.SetItemText((int)key, $"{key}: {value}");
+            else
+                zhuShuXing.AddItem($"{key}: {value}");
+            //zhuShuXing.AddItem($"{key}: {value}");
+        };
+        var i = 0;
+        foreach (valueDataEnum value in Enum.GetValues(typeof(valueDataEnum))) values.Add(value, ValuesList[i++], true);
+        collisionShape2D.Shape.Set("radius", pickRadius + values.GetValueOrDefault(valueDataEnum.range, 0));
+        /*var serializer = new SerializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .Build();
+        var yaml = serializer.Serialize(values);
+
+        Console.WriteLine("Serialized YAML:");
+        Console.WriteLine(yaml);*/
+
+        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        moneyShow = GetTree().CurrentScene.GetNode<Label>("CanvasLayer/showMoney");
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+        if (direction != Vector2.Zero)
+        {
+            if (direction.X < 0)
+            {
+                animationPlayer.Play("lftWalk");
+                isRt = false;
+            }
+            else if (direction.X > 0)
+            {
+                animationPlayer.Play("rtWalk");
+                isRt = true;
+            }
+            else
+            {
+                if (isRt)
+                    animationPlayer.Play("rtWalk");
+                else
+                    animationPlayer.Play("lftWalk");
+            }
+
+            Velocity = Speed * direction;
+        }
+        else
+        {
+            if (isRt)
+                animationPlayer.Play("rtIdle");
+            else
+                animationPlayer.Play("lftIdle");
+            Velocity = Vector2.Zero;
+        }
+
+        MoveAndSlide();
+    }
 }
