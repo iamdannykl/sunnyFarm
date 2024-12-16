@@ -21,6 +21,7 @@ public partial class player : CharacterBody2D
     [Export] public float luckyValue;
     [Export] public float drain;
     [Export] public float regeneration;
+    [Export] public float criticalRate;
     public List<float> ValuesList = new();
 
     [ExportCategory("normalValues")] [Export]
@@ -62,6 +63,7 @@ public partial class player : CharacterBody2D
         ValuesList.Add(luckyValue);
         ValuesList.Add(drain);
         ValuesList.Add(regeneration);
+        ValuesList.Add(criticalRate);
         values = new ObservableDictionary<valueDataEnum, float>();
         /*foreach (var VARIABLE in values)
         {
@@ -131,4 +133,13 @@ public partial class player : CharacterBody2D
 
         MoveAndSlide();
     }
+
+    public static readonly List<Weapon> WeaponPool = new()
+    {
+        new Weapon("Basic Sword", new List<string> { "Melee" }, Rarity.Common),
+        new Weapon("Magic Wand", new List<string> { "Magic" }, Rarity.Rare),
+        new Weapon("Epic Bow", new List<string> { "Ranged" }, Rarity.Epic),
+        new Weapon("Mythic Gun", new List<string> { "Gun" }, Rarity.Mythic),
+        new Weapon("Legendary Staff", new List<string> { "Magic", "Ranged" }, Rarity.Legendary)
+    };
 }
