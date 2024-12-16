@@ -10,5 +10,6 @@ public enum valueDataEnum
     spAtk = 5,
     luckyValue = 6,
     drain = 7,
-    regeneration = 8
+    regeneration = 8,
+    criticalRate = 9
 }

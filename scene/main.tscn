@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://dhhld26l4kghn"]
+[gd_scene load_steps=38 format=4 uid="uid://dhhld26l4kghn"]
 
 [ext_resource type="Texture2D" uid="uid://5vmsdvfl2p88" path="res://resources/Tiny Wonder Forest 1.0/tilemaps/spring tilemap.png" id="1_6pij1"]
 [ext_resource type="TileSet" uid="uid://cwiqqys5h605s" path="res://scene/buildings.tres" id="2_8cblm"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://code/ShowFps.cs" id="15_ahdy4"]
 [ext_resource type="PackedScene" uid="uid://b25vrjqvje8m8" path="res://scene/coin.tscn" id="17_p63fr"]
 [ext_resource type="PackedScene" uid="uid://cxerjmrmly5t8" path="res://scene/bullet.tscn" id="19_xphig"]
+[ext_resource type="PackedScene" uid="uid://bsbyl3rpv1cl2" path="res://scene/short_gun.tscn" id="21_gbmrn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dn0ki"]
 texture = ExtResource("1_6pij1")
@@ -681,7 +682,7 @@ position = Vector2(8, 8)
 collision_layer = 2
 script = ExtResource("2_ghgb8")
 atk = 10.0
-range = 100.0
+range = 25.0
 Speed = 50.0
 collisionShape2D = NodePath("pick/CollisionShape2D")
 zhuShuXing = NodePath("../../CanvasLayer/nextWave/property/TabContainer/主要")
@@ -1324,6 +1325,9 @@ ghost = ExtResource("12_ybdao")
 coin = ExtResource("17_p63fr")
 fire = ExtResource("19_xphig")
 normalBlt = ExtResource("19_xphig")
+tutuGun = ExtResource("6_aa2ww")
+shortGun = ExtResource("21_gbmrn")
+flameThrower = ExtResource("12_xh64b")
 
 [connection signal="timeout" from="playObjects/perLittleWave" to="playObjects" method="spawnPerLittleWave"]
 [connection signal="timeout" from="playObjects/eachSecond" to="playObjects" method="OnCountdownTick"]

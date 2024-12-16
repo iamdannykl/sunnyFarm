@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Godot;
 using YamlDotNet.Serialization;
 
@@ -60,8 +61,8 @@ public partial class spawner : Node2D
             var deSer = new DeserializerBuilder().Build();
             level = deSer.Deserialize<guanQia>(yamlStr);
             currentWave = level.waves[crtWaveNum];
-            GD.Print($"1-2 type:{level.waves[0].litWaves[1].enemyTypes[0].type}");
-            GD.Print($"level.waves.Count:{level.waves.Count}");
+            //GD.Print($"1-2 type:{level.waves[0].litWaves[1].enemyTypes[0].type}");
+            //GD.Print($"level.waves.Count:{level.waves.Count}");
         }
 
         countdown = currentWave.litWaves.Count * 5;
@@ -109,6 +110,7 @@ public partial class spawner : Node2D
     }*/
     public void finishThisWave()
     {
+        TestShop();
         if (crtWaveNum >= level.waves.Count - 1)
         {
             nextWavePanel.GetNode<Button>("continue").Visible = false;
@@ -169,5 +171,91 @@ public partial class spawner : Node2D
     public void AddChild(Area2D area, bool chk)
     {
         AddChild(area);
+    }
+
+// 每个稀有度对应的权重
+    public static readonly Dictionary<Rarity, float> BaseRarityWeights = new()
+    {
+        { Rarity.Common, 50f },
+        { Rarity.Rare, 30f },
+        { Rarity.Epic, 15f },
+        { Rarity.Mythic, 4f },
+        { Rarity.Legendary, 1f }
+    };
+
+    public static Dictionary<Rarity, float> GetAdjustedRarityWeights(int wave)
+    {
+        var adjustedWeights = new Dictionary<Rarity, float>(BaseRarityWeights);
+
+        foreach (var rarity in BaseRarityWeights.Keys) adjustedWeights[rarity] *= 1 + (wave - 1) * 0.1f; // 每波增加10%概率
+
+        // 增强高品质武器概率
+        adjustedWeights[Rarity.Common] *= Mathf.Max(0.5f, 1 - 0.1f * wave); // 减少低品质概率
+        return adjustedWeights;
+    }
+
+    public List<Weapon> RefreshShop(int wave, List<string> playerWeaponTags)
+    {
+        // 获取调整后的稀有度权重
+        var rarityWeights = GetAdjustedRarityWeights(wave);
+
+        // 按权重随机选择稀有度
+        var selectedRarity = WeightedRandomSelect(rarityWeights);
+        GD.Print($"selectedRarity:{selectedRarity}");
+        // 筛选符合稀有度的武器
+        var candidates = player.WeaponPool.Where(weapon => weapon.Rarity == selectedRarity).ToList();
+        GD.Print($"selectWeapon:{candidates.Count}");
+        // 如果有玩家武器标签，优先选择含有相同标签的武器
+        if (playerWeaponTags != null && playerWeaponTags.Count > 0)
+        {
+            var taggedCandidates = candidates.Where(weapon => weapon.Tags.Any(tag => playerWeaponTags.Contains(tag)))
+                .ToList();
+            if (taggedCandidates.Count > 0) candidates = taggedCandidates;
+        }
+
+        // 随机从候选武器中选择5件
+        return candidates.OrderBy(_ => GD.Randf()).Take(5).ToList();
+    }
+
+// 按权重随机选择一个稀有度
+    public Rarity WeightedRandomSelect(Dictionary<Rarity, float> weights)
+    {
+        var totalWeight = weights.Values.Sum();
+        var randomPoint = GD.Randf() * totalWeight;
+
+        foreach (var kvp in weights)
+        {
+            if (randomPoint < kvp.Value)
+                return kvp.Key;
+            randomPoint -= kvp.Value;
+        }
+
+        return weights.Keys.First(); // 默认返回第一个稀有度（不太可能触发）
+    }
+
+    public void EndWave(int wave, List<Weapon> playerWeapons)
+    {
+        GD.Print($"it's ending wave:{wave}");
+        // 获取玩家武器的标签集合
+        var playerTags = playerWeapons.SelectMany(weapon => weapon.Tags).Distinct().ToList();
+        GD.Print($"tags:{playerTags.Count}");
+        // 刷新商店
+        var shopWeapons = RefreshShop(wave, playerTags);
+        GD.Print($"shop count:{shopWeapons.Count}");
+        // 显示商店中的武器
+        foreach (var weapon in shopWeapons) GD.Print($"Shop Weapon: {weapon.Name}, Rarity: {weapon.Rarity}");
+    }
+
+    public void TestShop()
+    {
+        GD.Print("ending wave");
+        var wave = 5; // 当前波数
+        var playerWeapons = new List<Weapon>
+        {
+            new("Basic Sword", new List<string> { "Melee" }, Rarity.Common),
+            new("Magic Wand", new List<string> { "Magic" }, Rarity.Rare)
+        };
+
+        EndWave(wave, playerWeapons);
     }
 }
