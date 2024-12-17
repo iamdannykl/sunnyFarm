@@ -7,6 +7,8 @@
         <RootNamespace>SunnyFarm</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="SkiaSharp" Version="3.118.0-preview.2.3"/>
+        <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.118.0-preview.2.3"/>
         <PackageReference Include="YamlDotNet" Version="16.1.3"/>
     </ItemGroup>
     <ItemGroup>

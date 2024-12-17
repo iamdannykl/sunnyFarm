@@ -137,6 +137,8 @@ public partial class player : CharacterBody2D
     public static readonly List<Weapon> WeaponPool = new()
     {
         new Weapon("Basic Sword", new List<string> { "Melee" }, Rarity.Common),
+        new Weapon("stone", new List<string> { "Melee" }, Rarity.Common),
+        new Weapon("littleGun", new List<string> { "Gun" }, Rarity.Common),
         new Weapon("Magic Wand", new List<string> { "Magic" }, Rarity.Rare),
         new Weapon("Epic Bow", new List<string> { "Ranged" }, Rarity.Epic),
         new Weapon("Mythic Gun", new List<string> { "Gun" }, Rarity.Mythic),

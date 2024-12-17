@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Godot;
+using SkiaSharp;
 using YamlDotNet.Serialization;
+using Environment = System.Environment;
 
 namespace SunnyFarm.code;
 
@@ -49,11 +51,13 @@ public partial class spawner : Node2D
         readAndStart();
     }
 
+
     private void readAndStart()
     {
         var userDir = ProjectSettings.GlobalizePath("user://");
         var folderPath = Path.Combine(userDir, "saveFolder");
         var realPath = Path.Combine(folderPath, "level.yaml");
+        GD.Print($"fould path:{realPath}");
         if (File.Exists(realPath))
         {
             var sr = new StreamReader(realPath);
@@ -93,21 +97,6 @@ public partial class spawner : Node2D
             }
     }
 
-    /*async void startSpawn()
-    {
-        foreach (litWave lwv in currentWave.litWaves)
-        {
-            foreach (enemyType ene in lwv.enemyTypes)
-            {
-                for (int i = 0; i < ene.num; i++)
-                {
-                    spawnEntity();
-                }
-            }
-            await Task.Delay(5000);
-        }
-        finishThisWave();
-    }*/
     public void finishThisWave()
     {
         TestShop();
@@ -185,36 +174,107 @@ public partial class spawner : Node2D
 
     public static Dictionary<Rarity, float> GetAdjustedRarityWeights(int wave)
     {
-        var adjustedWeights = new Dictionary<Rarity, float>(BaseRarityWeights);
+        var initialValues = new Dictionary<Rarity, float>
+        {
+            { Rarity.Common, 0.90f },
+            { Rarity.Rare, 0.05f },
+            { Rarity.Epic, 0.02f },
+            { Rarity.Mythic, 0.02f },
+            { Rarity.Legendary, 0.01f }
+        };
 
-        foreach (var rarity in BaseRarityWeights.Keys) adjustedWeights[rarity] *= 1 + (wave - 1) * 0.1f; // 每波增加10%概率
+        var targetValues = new Dictionary<Rarity, float>
+        {
+            { Rarity.Common, 0.10f },
+            { Rarity.Rare, 0.25f },
+            { Rarity.Epic, 0.30f },
+            { Rarity.Mythic, 0.25f },
+            { Rarity.Legendary, 0.10f }
+        };
 
-        // 增强高品质武器概率
-        adjustedWeights[Rarity.Common] *= Mathf.Max(0.5f, 1 - 0.1f * wave); // 减少低品质概率
-        return adjustedWeights;
+        // 特殊参数（峰值和宽度）
+        var rareWavePeak = 15; // Rare 稀有度的峰值波数
+        var epicWavePeak = 20; // Epic 稀有度的峰值波数
+        var sigma = 5.0f; // 控制峰值曲线的宽度
+        var k = 0.1f; // 控制指数增长/衰减速度
+
+        // 计算稀有度权重
+        var weights = new Dictionary<Rarity, float>();
+
+        foreach (var rarity in initialValues.Keys)
+        {
+            var probability = 0f;
+
+            switch (rarity)
+            {
+                case Rarity.Common:
+                    // 指数衰减
+                    probability = targetValues[rarity] +
+                                  (initialValues[rarity] - targetValues[rarity]) * Mathf.Exp(-k * 0.85f * wave);
+                    break;
+
+                case Rarity.Rare:
+                    // 先升后降（正态分布）
+                    var rarePeak = 0.12f; // Rare 的峰值概率
+                    probability = targetValues[rarity] +
+                                  (initialValues[rarity] - targetValues[rarity]) * Mathf.Exp(-k * 0.5f * wave);
+                    break;
+
+                case Rarity.Epic:
+                    // 先升后降（正态分布）
+                    var epicPeak = 0.18f; // Epic 的峰值概率
+                    probability = targetValues[rarity] +
+                                  (initialValues[rarity] - targetValues[rarity]) * Mathf.Exp(-k * 0.4f * wave);
+                    break;
+
+                case Rarity.Mythic:
+                    // 指数增长
+                    probability = initialValues[rarity] +
+                                  (targetValues[rarity] - initialValues[rarity]) * (1 - Mathf.Exp(-k * 0.25f * wave));
+                    break;
+
+                case Rarity.Legendary:
+                    // 指数增长
+                    probability = initialValues[rarity] +
+                                  (targetValues[rarity] - initialValues[rarity]) * (1 - Mathf.Exp(-k * 1.2f * wave));
+                    break;
+            }
+
+            weights[rarity] = probability;
+        }
+
+        // 归一化处理，确保总和为 1
+        var totalWeight = weights.Values.Sum();
+        foreach (var rarity in weights.Keys.ToList()) weights[rarity] /= totalWeight;
+
+        return weights;
     }
 
     public List<Weapon> RefreshShop(int wave, List<string> playerWeaponTags)
     {
         // 获取调整后的稀有度权重
         var rarityWeights = GetAdjustedRarityWeights(wave);
-
-        // 按权重随机选择稀有度
-        var selectedRarity = WeightedRandomSelect(rarityWeights);
-        GD.Print($"selectedRarity:{selectedRarity}");
-        // 筛选符合稀有度的武器
-        var candidates = player.WeaponPool.Where(weapon => weapon.Rarity == selectedRarity).ToList();
-        GD.Print($"selectWeapon:{candidates.Count}");
-        // 如果有玩家武器标签，优先选择含有相同标签的武器
-        if (playerWeaponTags != null && playerWeaponTags.Count > 0)
+        foreach (var VARIABLE in rarityWeights) GD.Print($"wave:{wave}rare:{VARIABLE.Key}value:{VARIABLE.Value}");
+        var weaponList = new List<Weapon>();
+        for (var i = 0; i < 5; i++)
         {
-            var taggedCandidates = candidates.Where(weapon => weapon.Tags.Any(tag => playerWeaponTags.Contains(tag)))
-                .ToList();
-            if (taggedCandidates.Count > 0) candidates = taggedCandidates;
+            // 按权重随机选择稀有度
+            var selectedRarity = WeightedRandomSelect(rarityWeights);
+            // 筛选符合稀有度的武器
+            var candidates = player.WeaponPool.Where(weapon => weapon.Rarity == selectedRarity).ToList();
+            // 如果有玩家武器标签，优先选择含有相同标签的武器
+            if (playerWeaponTags != null && playerWeaponTags.Count > 0)
+            {
+                var taggedCandidates = candidates
+                    .Where(weapon => weapon.Tags.Any(tag => playerWeaponTags.Contains(tag)))
+                    .ToList();
+                if (taggedCandidates.Count > 0) candidates = taggedCandidates;
+            }
+
+            weaponList.Add(candidates.OrderBy(x => Guid.NewGuid()).First());
         }
 
-        // 随机从候选武器中选择5件
-        return candidates.OrderBy(_ => GD.Randf()).Take(5).ToList();
+        return weaponList;
     }
 
 // 按权重随机选择一个稀有度
@@ -235,27 +295,24 @@ public partial class spawner : Node2D
 
     public void EndWave(int wave, List<Weapon> playerWeapons)
     {
-        GD.Print($"it's ending wave:{wave}");
         // 获取玩家武器的标签集合
         var playerTags = playerWeapons.SelectMany(weapon => weapon.Tags).Distinct().ToList();
-        GD.Print($"tags:{playerTags.Count}");
         // 刷新商店
         var shopWeapons = RefreshShop(wave, playerTags);
-        GD.Print($"shop count:{shopWeapons.Count}");
         // 显示商店中的武器
+        GD.Print("**********************************************");
         foreach (var weapon in shopWeapons) GD.Print($"Shop Weapon: {weapon.Name}, Rarity: {weapon.Rarity}");
     }
 
     public void TestShop()
     {
         GD.Print("ending wave");
-        var wave = 5; // 当前波数
+        var wave = 100; // 当前波数
         var playerWeapons = new List<Weapon>
         {
             new("Basic Sword", new List<string> { "Melee" }, Rarity.Common),
             new("Magic Wand", new List<string> { "Magic" }, Rarity.Rare)
         };
-
-        EndWave(wave, playerWeapons);
+        for (var i = 0; i < wave; i++) EndWave(i, playerWeapons);
     }
 }
