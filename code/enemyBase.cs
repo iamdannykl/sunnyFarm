@@ -18,6 +18,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
     private Vector2 direction;
     private Sprite2D sprite2D;
     private bool hasDropCoin;
+    public Action removeSelf;
 
     public float Hp
     {
@@ -28,6 +29,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
             if (hp <= 0)
             {
                 CollisionLayer = 0;
+                removeSelf.Invoke();
                 crtCoin();
                 explodeAnim.Play("explode");
             }

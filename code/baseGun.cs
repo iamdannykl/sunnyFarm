@@ -47,6 +47,11 @@ public partial class baseGun : Area2D
     public void addEnemy(Area2D area)
     {
         enemyList.Add(area);
+        area.GetParent<enemyBase>().removeSelf += () =>
+        {
+            GD.Print("has been removed!");
+            enemyList.Remove(area);
+        };
     }
 
     public void removeEnemy(Area2D area)

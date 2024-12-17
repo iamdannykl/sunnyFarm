@@ -65,11 +65,6 @@ public partial class player : CharacterBody2D
         ValuesList.Add(regeneration);
         ValuesList.Add(criticalRate);
         values = new ObservableDictionary<valueDataEnum, float>();
-        /*foreach (var VARIABLE in values)
-        {
-            zhuShuXing.AddItem($"{VARIABLE.Key}: {VARIABLE.Value}");
-            GD.Print($"has added {values.Count}");
-        }*/
 
         // 订阅事件
         values.OnItemAdded += (key, value, isFst)
@@ -85,13 +80,6 @@ public partial class player : CharacterBody2D
         var i = 0;
         foreach (valueDataEnum value in Enum.GetValues(typeof(valueDataEnum))) values.Add(value, ValuesList[i++], true);
         collisionShape2D.Shape.Set("radius", pickRadius + values.GetValueOrDefault(valueDataEnum.range, 0));
-        /*var serializer = new SerializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .Build();
-        var yaml = serializer.Serialize(values);
-
-        Console.WriteLine("Serialized YAML:");
-        Console.WriteLine(yaml);*/
 
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         moneyShow = GetTree().CurrentScene.GetNode<Label>("CanvasLayer/showMoney");
@@ -134,14 +122,14 @@ public partial class player : CharacterBody2D
         MoveAndSlide();
     }
 
-    public static readonly List<Weapon> WeaponPool = new()
+    public static readonly List<Equip> WeaponPool = new()
     {
-        new Weapon("Basic Sword", new List<string> { "Melee" }, Rarity.Common),
-        new Weapon("stone", new List<string> { "Melee" }, Rarity.Common),
-        new Weapon("littleGun", new List<string> { "Gun" }, Rarity.Common),
-        new Weapon("Magic Wand", new List<string> { "Magic" }, Rarity.Rare),
-        new Weapon("Epic Bow", new List<string> { "Ranged" }, Rarity.Epic),
-        new Weapon("Mythic Gun", new List<string> { "Gun" }, Rarity.Mythic),
-        new Weapon("Legendary Staff", new List<string> { "Magic", "Ranged" }, Rarity.Legendary)
+        new Equip("Basic Sword", new List<string> { "Melee" }, Rarity.Common),
+        new Equip("stone", new List<string> { "Melee" }, Rarity.Common),
+        new Equip("littleGun", new List<string> { "Gun", "Magic" }, Rarity.Common),
+        new Equip("Magic Wand", new List<string> { "Magic" }, Rarity.Rare),
+        new Equip("Epic Bow", new List<string> { "Ranged" }, Rarity.Epic),
+        new Equip("Mythic Gun", new List<string> { "Gun" }, Rarity.Mythic),
+        new Equip("Legendary Staff", new List<string> { "Magic", "Ranged" }, Rarity.Legendary)
     };
 }

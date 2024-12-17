@@ -228,7 +228,7 @@ _data = {
 }
 
 [node name="baseChara" type="CharacterBody2D" node_paths=PackedStringArray("hitFlasher")]
-collision_layer = 4
+collision_layer = 0
 script = ExtResource("1_0fmmd")
 speed = 35.0
 hp = 5.0

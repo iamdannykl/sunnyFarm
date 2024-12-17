@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using SunnyFarm.code;
 
-public partial class Weapon : Area2D
+public class Equip
 {
     [Export] public Texture2D icon;
     [Export] public string discribe;
@@ -12,7 +12,7 @@ public partial class Weapon : Area2D
     public List<string> Tags { get; set; }
     public Rarity Rarity { get; set; }
 
-    public Weapon(string name, List<string> tags, Rarity rarity)
+    public Equip(string name, List<string> tags, Rarity rarity)
     {
         Name = name;
         Tags = tags;

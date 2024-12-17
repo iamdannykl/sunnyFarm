@@ -107,9 +107,10 @@ public partial class spawner : Node2D
         }
 
         foreach (var ene in enemies)
+            //ene?.QueueFree();
             try
             {
-                ene.QueueFree(); //add a lock
+                ene.QueueFree();
             }
             catch (Exception e)
             {
@@ -162,32 +163,22 @@ public partial class spawner : Node2D
         AddChild(area);
     }
 
-// 每个稀有度对应的权重
-    public static readonly Dictionary<Rarity, float> BaseRarityWeights = new()
-    {
-        { Rarity.Common, 50f },
-        { Rarity.Rare, 30f },
-        { Rarity.Epic, 15f },
-        { Rarity.Mythic, 4f },
-        { Rarity.Legendary, 1f }
-    };
-
     public static Dictionary<Rarity, float> GetAdjustedRarityWeights(int wave)
     {
         var initialValues = new Dictionary<Rarity, float>
         {
-            { Rarity.Common, 0.90f },
-            { Rarity.Rare, 0.05f },
-            { Rarity.Epic, 0.02f },
-            { Rarity.Mythic, 0.02f },
-            { Rarity.Legendary, 0.01f }
+            { Rarity.Common, 1f },
+            { Rarity.Rare, 0f },
+            { Rarity.Epic, 0f },
+            { Rarity.Mythic, 0f },
+            { Rarity.Legendary, 0f }
         };
 
         var targetValues = new Dictionary<Rarity, float>
         {
             { Rarity.Common, 0.10f },
-            { Rarity.Rare, 0.25f },
-            { Rarity.Epic, 0.30f },
+            { Rarity.Rare, 0.23f },
+            { Rarity.Epic, 0.32f },
             { Rarity.Mythic, 0.25f },
             { Rarity.Legendary, 0.10f }
         };
@@ -210,33 +201,33 @@ public partial class spawner : Node2D
                 case Rarity.Common:
                     // 指数衰减
                     probability = targetValues[rarity] +
-                                  (initialValues[rarity] - targetValues[rarity]) * Mathf.Exp(-k * 0.85f * wave);
+                                  (initialValues[rarity] - targetValues[rarity]) * Mathf.Exp(-k * 2f * wave);
                     break;
 
                 case Rarity.Rare:
                     // 先升后降（正态分布）
                     var rarePeak = 0.12f; // Rare 的峰值概率
                     probability = targetValues[rarity] +
-                                  (initialValues[rarity] - targetValues[rarity]) * Mathf.Exp(-k * 0.5f * wave);
+                                  (initialValues[rarity] - targetValues[rarity]) * Mathf.Exp(-k * 0.25f * wave);
                     break;
 
                 case Rarity.Epic:
                     // 先升后降（正态分布）
                     var epicPeak = 0.18f; // Epic 的峰值概率
                     probability = targetValues[rarity] +
-                                  (initialValues[rarity] - targetValues[rarity]) * Mathf.Exp(-k * 0.4f * wave);
+                                  (initialValues[rarity] - targetValues[rarity]) * Mathf.Exp(-k * 0.1f * wave);
                     break;
 
                 case Rarity.Mythic:
                     // 指数增长
                     probability = initialValues[rarity] +
-                                  (targetValues[rarity] - initialValues[rarity]) * (1 - Mathf.Exp(-k * 0.25f * wave));
+                                  (targetValues[rarity] - initialValues[rarity]) * (1 - Mathf.Exp(-k * 0.08f * wave));
                     break;
 
                 case Rarity.Legendary:
                     // 指数增长
                     probability = initialValues[rarity] +
-                                  (targetValues[rarity] - initialValues[rarity]) * (1 - Mathf.Exp(-k * 1.2f * wave));
+                                  (targetValues[rarity] - initialValues[rarity]) * (1 - Mathf.Exp(-k * 0.1f * wave));
                     break;
             }
 
@@ -250,12 +241,12 @@ public partial class spawner : Node2D
         return weights;
     }
 
-    public List<Weapon> RefreshShop(int wave, List<string> playerWeaponTags)
+    public List<Equip> RefreshShop(int wave, List<string> playerWeaponTags)
     {
         // 获取调整后的稀有度权重
         var rarityWeights = GetAdjustedRarityWeights(wave);
-        foreach (var VARIABLE in rarityWeights) GD.Print($"wave:{wave}rare:{VARIABLE.Key}value:{VARIABLE.Value}");
-        var weaponList = new List<Weapon>();
+        foreach (var VARIABLE in rarityWeights) GD.Print($"wave:{wave + 1}rare:{VARIABLE.Key}value:{VARIABLE.Value}");
+        var weaponList = new List<Equip>();
         for (var i = 0; i < 5; i++)
         {
             // 按权重随机选择稀有度
@@ -293,7 +284,7 @@ public partial class spawner : Node2D
         return weights.Keys.First(); // 默认返回第一个稀有度（不太可能触发）
     }
 
-    public void EndWave(int wave, List<Weapon> playerWeapons)
+    public void EndWave(int wave, List<Equip> playerWeapons)
     {
         // 获取玩家武器的标签集合
         var playerTags = playerWeapons.SelectMany(weapon => weapon.Tags).Distinct().ToList();
@@ -308,11 +299,13 @@ public partial class spawner : Node2D
     {
         GD.Print("ending wave");
         var wave = 100; // 当前波数
-        var playerWeapons = new List<Weapon>
+        var playerWeapons = new List<Equip>
         {
             new("Basic Sword", new List<string> { "Melee" }, Rarity.Common),
             new("Magic Wand", new List<string> { "Magic" }, Rarity.Rare)
         };
-        for (var i = 0; i < wave; i++) EndWave(i, playerWeapons);
+        /*for (var i = 0; i < wave; i++)
+            EndWave(i, playerWeapons);*/
+        EndWave(crtWaveNum, playerWeapons);
     }
 }
