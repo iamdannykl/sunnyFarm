@@ -9,6 +9,7 @@ public partial class MatchIt : Node
     public Dictionary<enemyTypeEnum, PackedScene> findEnemy;
     public Dictionary<bulletType, PackedScene> findBullet;
     public Dictionary<weapons, PackedScene> findWeapons;
+    public List<EquipInfo> equipInfos = new();
 
     [Export] private PackedScene blueBird;
 
@@ -50,6 +51,19 @@ public partial class MatchIt : Node
             { weapons.shortGun, shortGun },
             { weapons.flamethrower, flameThrower }
         };
+        spawnTheInfoOfEquips();
+    }
+
+    private void spawnTheInfoOfEquips()
+    {
+        foreach (var equip in findWeapons)
+        {
+            var temEquip = equip.Value.Instantiate() as Equip;
+            if (temEquip != null)
+                equipInfos.Add(new EquipInfo(temEquip.discribe, temEquip.weaponType, temEquip.MyTagsList,
+                    temEquip.Rarity));
+            temEquip.QueueFree();
+        }
     }
 
     public PackedScene matchBullet(bulletType btp)

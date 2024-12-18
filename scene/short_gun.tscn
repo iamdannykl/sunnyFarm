@@ -1,16 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bsbyl3rpv1cl2"]
+[gd_scene load_steps=6 format=3 uid="uid://bsbyl3rpv1cl2"]
 
 [ext_resource type="Script" path="res://code/bugun.cs" id="1_2b62a"]
 [ext_resource type="PackedScene" uid="uid://cxerjmrmly5t8" path="res://scene/bullet.tscn" id="2_d8b2t"]
-[ext_resource type="Texture2D" uid="uid://dy8377dheoosq" path="res://resources/1.png" id="3_oda45"]
+[ext_resource type="Texture2D" uid="uid://cvhsjgat5nj8s" path="res://zhuangBei/shortGun/short_gun.tres" id="3_xbxk4"]
 [ext_resource type="AudioStream" uid="uid://bnrursvt8gg11" path="res://audio/sfx/shooting/Shooting0001.ogg" id="4_3qmn3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hk7as"]
 radius = 92.0217
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_77u22"]
-atlas = ExtResource("3_oda45")
-region = Rect2(0, 99, 17, 13)
 
 [node name="shortGun" type="Area2D"]
 collision_layer = 0
@@ -18,6 +14,11 @@ collision_mask = 4
 script = ExtResource("1_2b62a")
 blt = ExtResource("2_d8b2t")
 atkValue = 4.0
+icon = ExtResource("3_xbxk4")
+discribe = "normal gun"
+weaponType = 2
+MyTagsList = PackedStringArray("")
+MyTags = Array[int]([0])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_hk7as")
@@ -33,7 +34,7 @@ stream = ExtResource("4_3qmn3")
 position = Vector2(4, -1)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_77u22")
+texture = ExtResource("3_xbxk4")
 
 [connection signal="area_entered" from="." to="." method="addEnemy"]
 [connection signal="area_exited" from="." to="." method="removeEnemy"]

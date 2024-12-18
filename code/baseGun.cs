@@ -10,7 +10,7 @@ public enum bulletType
     fire
 }
 
-public partial class baseGun : Area2D
+public partial class baseGun : Equip
 {
     [Export] public PackedScene blt;
     [Export] public bulletType btp;

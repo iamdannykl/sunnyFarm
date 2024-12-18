@@ -38,6 +38,7 @@ public partial class player : CharacterBody2D
     private float pickRadius;
 
     public ObservableDictionary<valueDataEnum, float> values;
+    public List<Equip> playerWeapons = new();
     [Export] private mainProperty zhuShuXing;
 
     public int MoneyValue
@@ -48,6 +49,13 @@ public partial class player : CharacterBody2D
             moneyShow.Text = $"Money:{value}";
             moneyValue = value;
         }
+    }
+
+    private void AddWeaponsToPlayer()
+    {
+        foreach (var variable in GetNode<Node2D>("markers").GetChildren())
+            if (variable.GetChildCount() > 0)
+                playerWeapons.Add(variable.GetChild<Equip>(0));
     }
 
     public override void _Ready()
@@ -65,7 +73,7 @@ public partial class player : CharacterBody2D
         ValuesList.Add(regeneration);
         ValuesList.Add(criticalRate);
         values = new ObservableDictionary<valueDataEnum, float>();
-
+        AddWeaponsToPlayer();
         // 订阅事件
         values.OnItemAdded += (key, value, isFst)
             =>
@@ -122,7 +130,7 @@ public partial class player : CharacterBody2D
         MoveAndSlide();
     }
 
-    public static readonly List<Equip> WeaponPool = new()
+    /*public static readonly List<Equip> WeaponPool = new()
     {
         new Equip("Basic Sword", new List<string> { "Melee" }, Rarity.Common),
         new Equip("stone", new List<string> { "Melee" }, Rarity.Common),
@@ -131,5 +139,5 @@ public partial class player : CharacterBody2D
         new Equip("Epic Bow", new List<string> { "Ranged" }, Rarity.Epic),
         new Equip("Mythic Gun", new List<string> { "Gun" }, Rarity.Mythic),
         new Equip("Legendary Staff", new List<string> { "Magic", "Ranged" }, Rarity.Legendary)
-    };
+    };*/
 }
