@@ -61,7 +61,7 @@ public partial class MatchIt : Node
             var temEquip = equip.Value.Instantiate() as Equip;
             if (temEquip != null)
                 equipInfos.Add(new EquipInfo(temEquip.discribe, temEquip.weaponType, temEquip.MyTagsList,
-                    temEquip.Rarity));
+                    temEquip.Rarity, temEquip.icon));
             temEquip.QueueFree();
         }
     }

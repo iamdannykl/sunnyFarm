@@ -40,6 +40,7 @@ public partial class player : CharacterBody2D
     public ObservableDictionary<valueDataEnum, float> values;
     public List<Equip> playerWeapons = new();
     [Export] private mainProperty zhuShuXing;
+    [Export] public GridContainer equippedContainer;
 
     public int MoneyValue
     {
@@ -55,7 +56,22 @@ public partial class player : CharacterBody2D
     {
         foreach (var variable in GetNode<Node2D>("markers").GetChildren())
             if (variable.GetChildCount() > 0)
+            {
+                GD.Print("added it");
                 playerWeapons.Add(variable.GetChild<Equip>(0));
+            }
+    }
+
+    private void displayWeaponsInGridContainer()
+    {
+        var i = 0;
+        GD.Print($"playerWeapons: {playerWeapons.Count}");
+        foreach (var node in equippedContainer.GetChildren())
+        {
+            var button = (Button)node;
+            if (i < playerWeapons.Count)
+                button.Icon = playerWeapons[i++].icon;
+        }
     }
 
     public override void _Ready()
@@ -74,6 +90,7 @@ public partial class player : CharacterBody2D
         ValuesList.Add(criticalRate);
         values = new ObservableDictionary<valueDataEnum, float>();
         AddWeaponsToPlayer();
+        displayWeaponsInGridContainer();
         // 订阅事件
         values.OnItemAdded += (key, value, isFst)
             =>

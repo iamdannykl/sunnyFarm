@@ -29,7 +29,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
             if (hp <= 0)
             {
                 CollisionLayer = 0;
-                removeSelf.Invoke();
+                removeSelf?.Invoke(); //check if it is null
                 crtCoin();
                 explodeAnim.Play("explode");
             }

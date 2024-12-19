@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://dhhld26l4kghn"]
+[gd_scene load_steps=37 format=4 uid="uid://dhhld26l4kghn"]
 
 [ext_resource type="Texture2D" uid="uid://5vmsdvfl2p88" path="res://resources/Tiny Wonder Forest 1.0/tilemaps/spring tilemap.png" id="1_6pij1"]
 [ext_resource type="TileSet" uid="uid://cwiqqys5h605s" path="res://scene/buildings.tres" id="2_8cblm"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://cg5erwllb5khg" path="res://scene/red_x.tscn" id="6_2crqq"]
 [ext_resource type="PackedScene" uid="uid://ju2iihuohobq" path="res://scene/tutu_gun.tscn" id="6_aa2ww"]
 [ext_resource type="PackedScene" uid="uid://ckdy6r52ifnlj" path="res://scene/blueBird.tscn" id="6_fxihv"]
-[ext_resource type="Texture2D" uid="uid://4fht0i1igi65" path="res://resources/sprite/item/hall_c/item _21.png" id="11_e027f"]
 [ext_resource type="Script" path="res://code/MatchIt.cs" id="11_w7swr"]
 [ext_resource type="Texture2D" uid="uid://bi4t7vibrtpfu" path="res://resources/sprite/item/hall_b/item-34.png" id="12_1ink0"]
 [ext_resource type="PackedScene" uid="uid://l25siv5de70n" path="res://scene/flamethrower.tscn" id="12_xh64b"]
@@ -668,16 +667,17 @@ tile_set = ExtResource("2_8cblm")
 [node name="TileMapLayer2" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_8cblm")
 
-[node name="playObjects" type="Node2D" parent="." node_paths=PackedStringArray("lastTime", "countdownTimer")]
+[node name="playObjects" type="Node2D" parent="." node_paths=PackedStringArray("lastTime", "goodsContainer", "countdownTimer")]
 y_sort_enabled = true
 script = ExtResource("4_im854")
 enemy1 = ExtResource("6_fxihv")
 minSpawnDistance = 16.0
 lastTime = NodePath("../CanvasLayer/TimerLabel/TimeLast")
+goodsContainer = NodePath("../CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer")
 redX = ExtResource("6_2crqq")
 countdownTimer = NodePath("eachSecond")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="playObjects" node_paths=PackedStringArray("collisionShape2D", "zhuShuXing")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="playObjects" node_paths=PackedStringArray("collisionShape2D", "zhuShuXing", "equippedContainer")]
 position = Vector2(8, 8)
 collision_layer = 2
 script = ExtResource("2_ghgb8")
@@ -686,6 +686,7 @@ range = 25.0
 Speed = 50.0
 collisionShape2D = NodePath("pick/CollisionShape2D")
 zhuShuXing = NodePath("../../CanvasLayer/nextWave/property/TabContainer/主要")
+equippedContainer = NodePath("../../CanvasLayer/nextWave/weapons/GridContainer")
 
 [node name="atkAndDie" type="Sprite2D" parent="playObjects/CharacterBody2D"]
 visible = false
@@ -796,7 +797,6 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 
 [node name="nextWave" type="Panel" parent="CanvasLayer"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -830,7 +830,7 @@ layout_mode = 2
 layout_mode = 0
 offset_right = 76.0
 offset_bottom = 76.0
-texture = ExtResource("11_e027f")
+stretch_mode = 5
 
 [node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel"]
 layout_mode = 0
@@ -838,7 +838,7 @@ offset_left = 81.0
 offset_top = 17.0
 offset_right = 161.0
 offset_bottom = 62.0
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 22
 text = "XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -886,7 +886,7 @@ layout_mode = 2
 layout_mode = 0
 offset_right = 76.0
 offset_bottom = 76.0
-texture = ExtResource("11_e027f")
+stretch_mode = 5
 
 [node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel2"]
 layout_mode = 0
@@ -894,7 +894,7 @@ offset_left = 81.0
 offset_top = 17.0
 offset_right = 161.0
 offset_bottom = 62.0
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 22
 text = "XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -942,7 +942,7 @@ layout_mode = 2
 layout_mode = 0
 offset_right = 76.0
 offset_bottom = 76.0
-texture = ExtResource("11_e027f")
+stretch_mode = 5
 
 [node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel3"]
 layout_mode = 0
@@ -950,7 +950,7 @@ offset_left = 81.0
 offset_top = 17.0
 offset_right = 161.0
 offset_bottom = 62.0
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 22
 text = "XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -998,7 +998,7 @@ layout_mode = 2
 layout_mode = 0
 offset_right = 76.0
 offset_bottom = 76.0
-texture = ExtResource("11_e027f")
+stretch_mode = 5
 
 [node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel4"]
 layout_mode = 0
@@ -1006,7 +1006,7 @@ offset_left = 81.0
 offset_top = 17.0
 offset_right = 161.0
 offset_bottom = 62.0
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 22
 text = "XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1054,7 +1054,7 @@ layout_mode = 2
 layout_mode = 0
 offset_right = 76.0
 offset_bottom = 76.0
-texture = ExtResource("11_e027f")
+stretch_mode = 5
 
 [node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel5"]
 layout_mode = 0
@@ -1062,7 +1062,7 @@ offset_left = 81.0
 offset_top = 17.0
 offset_right = 161.0
 offset_bottom = 62.0
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 22
 text = "XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1090,62 +1090,6 @@ text = "12"
 icon = ExtResource("12_1ink0")
 
 [node name="lock" type="Button" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel5"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 12.0
-offset_bottom = 62.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 24
-text = "锁定"
-
-[node name="itemPanel6" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
-custom_minimum_size = Vector2(171, 246)
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel6"]
-layout_mode = 0
-offset_right = 76.0
-offset_bottom = 76.0
-texture = ExtResource("11_e027f")
-
-[node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel6"]
-layout_mode = 0
-offset_left = 81.0
-offset_top = 17.0
-offset_right = 161.0
-offset_bottom = 62.0
-theme_override_font_sizes/font_size = 35
-text = "XXX"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="describe" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel6"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 86.0
-offset_bottom = -46.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="price" type="Button" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel6"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -41.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "12"
-icon = ExtResource("12_1ink0")
-
-[node name="lock" type="Button" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel6"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0

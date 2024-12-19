@@ -23,6 +23,7 @@ public partial class spawner : Node2D
     [Export] public PackedScene enemy1;
     [Export] private float minSpawnDistance;
     [Export] public Label lastTime;
+    [Export] public HBoxContainer goodsContainer;
     public List<enemyBase> enemies = new();
     private Node2D zx, ys;
     private Random random = new();
@@ -60,6 +61,7 @@ public partial class spawner : Node2D
         GD.Print($"fould path:{realPath}");
         if (File.Exists(realPath))
         {
+            GD.Print("fould exist");
             var sr = new StreamReader(realPath);
             var yamlStr = sr.ReadToEnd();
             var deSer = new DeserializerBuilder().Build();
@@ -241,25 +243,25 @@ public partial class spawner : Node2D
         return weights;
     }
 
-    public List<Equip> RefreshShop(int wave, List<string> playerWeaponTags)
+    public List<EquipInfo> RefreshShop(int wave, List<Tags> playerWeaponTags)
     {
         // 获取调整后的稀有度权重
         var rarityWeights = GetAdjustedRarityWeights(wave);
         foreach (var VARIABLE in rarityWeights) GD.Print($"wave:{wave + 1}rare:{VARIABLE.Key}value:{VARIABLE.Value}");
-        var weaponList = new List<Equip>();
+        var weaponList = new List<EquipInfo>();
         for (var i = 0; i < 5; i++)
         {
             // 按权重随机选择稀有度
             var selectedRarity = WeightedRandomSelect(rarityWeights);
             // 筛选符合稀有度的武器
             var candidates =
-                new List<Equip>();
-            MatchIt.Instance.equipInfos.Where(weapon => weapon.Rarity == selectedRarity).ToList();
+                /*new List<Equip>();*/
+                MatchIt.Instance.equipInfos.Where(weapon => weapon.Rarity == selectedRarity).ToList();
             // 如果有玩家武器标签，优先选择含有相同标签的武器
             if (playerWeaponTags != null && playerWeaponTags.Count > 0)
             {
                 var taggedCandidates = candidates
-                    .Where(weapon => weapon.MyTagsList.Any(tag => playerWeaponTags.Contains(tag)))
+                    .Where(weapon => weapon.Tags.Any(tag => playerWeaponTags.Contains(tag)))
                     .ToList();
                 if (taggedCandidates.Count > 0) candidates = taggedCandidates;
             }
@@ -289,12 +291,22 @@ public partial class spawner : Node2D
     public void EndWave(int wave, List<Equip> playerWeapons)
     {
         // 获取玩家武器的标签集合
+        GD.Print($"player:{playerWeapons.Count}");
         var playerTags = playerWeapons.SelectMany(weapon => weapon.MyTagsList).Distinct().ToList();
         // 刷新商店
         var shopWeapons = RefreshShop(wave, playerTags);
         // 显示商店中的武器
         GD.Print("**********************************************");
-        foreach (var weapon in shopWeapons) GD.Print($"Shop Weapon: {weapon.weaponType}, Rarity: {weapon.Rarity}");
+        /*foreach (var weapon in shopWeapons)
+            GD.Print($"Shop Weapon: {weapon.weaponType.ToString()}, Rarity: {weapon.Rarity}");*/
+        for (var i = 0; i < shopWeapons.Count; i++)
+        {
+            var panel = goodsContainer.GetChild<Panel>(i);
+            var currentWeapon = shopWeapons[i];
+            panel.GetNode<TextureRect>("TextureRect").Texture = currentWeapon.icon;
+            panel.GetNode<Label>("name").Text = currentWeapon.weaponType.ToString();
+            panel.GetNode<Label>("describe").Text = currentWeapon.discribe;
+        }
     }
 
     public void TestShop()
@@ -302,6 +314,7 @@ public partial class spawner : Node2D
         GD.Print("ending wave");
         var wave = 100; // 当前波数
         var playerWeapons = player.Instance.playerWeapons;
+        GD.Print($"playerWeapons: {playerWeapons.Count}");
         /*for (var i = 0; i < wave; i++)
             EndWave(i, playerWeapons);*/
         EndWave(crtWaveNum, playerWeapons);

@@ -17,6 +17,7 @@ icon = ExtResource("2_cwxwy")
 discribe = "high shoot speed gun"
 weaponType = 3
 Rarity = 2
+MyTagsList = Array[int]([0])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_cwxwy")
