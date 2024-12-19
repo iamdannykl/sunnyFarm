@@ -28,7 +28,7 @@ public partial class player : CharacterBody2D
     public float Speed;
 
     [Export] public CollisionShape2D collisionShape2D;
-    public Label moneyShow;
+    [Export] public Label moneyShow;
     public const float JumpVelocity = -400.0f;
     private AnimationPlayer animationPlayer;
     private bool isRt;
@@ -39,6 +39,7 @@ public partial class player : CharacterBody2D
 
     public ObservableDictionary<valueDataEnum, float> values;
     public List<Equip> playerWeapons = new();
+    public List<Marker2D> markers = new();
     [Export] private mainProperty zhuShuXing;
     [Export] public GridContainer equippedContainer;
 
@@ -54,7 +55,7 @@ public partial class player : CharacterBody2D
 
     private void AddWeaponsToPlayer()
     {
-        foreach (var variable in GetNode<Node2D>("markers").GetChildren())
+        foreach (var variable in markers)
             if (variable.GetChildCount() > 0)
             {
                 GD.Print("added it");
@@ -62,7 +63,20 @@ public partial class player : CharacterBody2D
             }
     }
 
-    private void displayWeaponsInGridContainer()
+    public void addWeaponsFromShop(EquipInfo inEquipInfo)
+    {
+        var eqp = MatchIt.Instance.matchWeapon(inEquipInfo.weaponType).Instantiate() as Equip;
+        playerWeapons.Add(eqp);
+        displayWeaponsInGridContainer();
+        foreach (var variable in markers)
+            if (variable.GetChildCount() <= 0)
+            {
+                variable.AddChild(eqp);
+                break;
+            }
+    }
+
+    public void displayWeaponsInGridContainer()
     {
         var i = 0;
         GD.Print($"playerWeapons: {playerWeapons.Count}");
@@ -89,6 +103,7 @@ public partial class player : CharacterBody2D
         ValuesList.Add(regeneration);
         ValuesList.Add(criticalRate);
         values = new ObservableDictionary<valueDataEnum, float>();
+        foreach (var variable in GetNode<Node2D>("markers").GetChildren()) markers.Add((Marker2D)variable);
         AddWeaponsToPlayer();
         displayWeaponsInGridContainer();
         // 订阅事件
@@ -107,7 +122,7 @@ public partial class player : CharacterBody2D
         collisionShape2D.Shape.Set("radius", pickRadius + values.GetValueOrDefault(valueDataEnum.range, 0));
 
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        moneyShow = GetTree().CurrentScene.GetNode<Label>("CanvasLayer/showMoney");
+        //moneyShow = GetTree().CurrentScene.GetNode<Label>("CanvasLayer/showMoney");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -146,15 +161,4 @@ public partial class player : CharacterBody2D
 
         MoveAndSlide();
     }
-
-    /*public static readonly List<Equip> WeaponPool = new()
-    {
-        new Equip("Basic Sword", new List<string> { "Melee" }, Rarity.Common),
-        new Equip("stone", new List<string> { "Melee" }, Rarity.Common),
-        new Equip("littleGun", new List<string> { "Gun", "Magic" }, Rarity.Common),
-        new Equip("Magic Wand", new List<string> { "Magic" }, Rarity.Rare),
-        new Equip("Epic Bow", new List<string> { "Ranged" }, Rarity.Epic),
-        new Equip("Mythic Gun", new List<string> { "Gun" }, Rarity.Mythic),
-        new Equip("Legendary Staff", new List<string> { "Magic", "Ranged" }, Rarity.Legendary)
-    };*/
 }

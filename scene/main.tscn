@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://dhhld26l4kghn"]
+[gd_scene load_steps=39 format=4 uid="uid://dhhld26l4kghn"]
 
 [ext_resource type="Texture2D" uid="uid://5vmsdvfl2p88" path="res://resources/Tiny Wonder Forest 1.0/tilemaps/spring tilemap.png" id="1_6pij1"]
 [ext_resource type="TileSet" uid="uid://cwiqqys5h605s" path="res://scene/buildings.tres" id="2_8cblm"]
@@ -14,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://bi4t7vibrtpfu" path="res://resources/sprite/item/hall_b/item-34.png" id="12_1ink0"]
 [ext_resource type="PackedScene" uid="uid://l25siv5de70n" path="res://scene/flamethrower.tscn" id="12_xh64b"]
 [ext_resource type="PackedScene" uid="uid://bewql7fesr4sx" path="res://scene/ghost.tscn" id="12_ybdao"]
+[ext_resource type="Script" path="res://code/buy.cs" id="13_0aota"]
 [ext_resource type="Texture2D" uid="uid://b4d5qwui0onqy" path="res://resources/sprite/item/hall_c/item _25.png" id="13_q8wqb"]
+[ext_resource type="AudioStream" uid="uid://c5ilx45gnjmf0" path="res://audio/brotato/buy.wav" id="14_x1oud"]
 [ext_resource type="Script" path="res://code/mainProperty.cs" id="15_02ofs"]
 [ext_resource type="Script" path="res://code/ShowFps.cs" id="15_ahdy4"]
 [ext_resource type="PackedScene" uid="uid://b25vrjqvje8m8" path="res://scene/coin.tscn" id="17_p63fr"]
@@ -667,17 +669,20 @@ tile_set = ExtResource("2_8cblm")
 [node name="TileMapLayer2" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_8cblm")
 
-[node name="playObjects" type="Node2D" parent="." node_paths=PackedStringArray("lastTime", "goodsContainer", "countdownTimer")]
+[node name="playObjects" type="Node2D" parent="." node_paths=PackedStringArray("lastTime", "goodsContainer", "zx", "ys", "nextWavePanel", "countdownTimer")]
 y_sort_enabled = true
 script = ExtResource("4_im854")
 enemy1 = ExtResource("6_fxihv")
 minSpawnDistance = 16.0
 lastTime = NodePath("../CanvasLayer/TimerLabel/TimeLast")
 goodsContainer = NodePath("../CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer")
+zx = NodePath("../land/zx")
+ys = NodePath("../land/ys")
+nextWavePanel = NodePath("../CanvasLayer/nextWave")
 redX = ExtResource("6_2crqq")
 countdownTimer = NodePath("eachSecond")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="playObjects" node_paths=PackedStringArray("collisionShape2D", "zhuShuXing", "equippedContainer")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="playObjects" node_paths=PackedStringArray("collisionShape2D", "moneyShow", "zhuShuXing", "equippedContainer")]
 position = Vector2(8, 8)
 collision_layer = 2
 script = ExtResource("2_ghgb8")
@@ -685,6 +690,7 @@ atk = 10.0
 range = 25.0
 Speed = 50.0
 collisionShape2D = NodePath("pick/CollisionShape2D")
+moneyShow = NodePath("../../CanvasLayer/showMoney")
 zhuShuXing = NodePath("../../CanvasLayer/nextWave/property/TabContainer/主要")
 equippedContainer = NodePath("../../CanvasLayer/nextWave/weapons/GridContainer")
 
@@ -797,6 +803,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 
 [node name="nextWave" type="Panel" parent="CanvasLayer"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -864,6 +871,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "12"
 icon = ExtResource("12_1ink0")
+script = ExtResource("13_0aota")
 
 [node name="lock" type="Button" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel"]
 layout_mode = 1
@@ -877,6 +885,9 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "锁定"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel"]
+stream = ExtResource("14_x1oud")
 
 [node name="itemPanel2" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
@@ -920,6 +931,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "12"
 icon = ExtResource("12_1ink0")
+script = ExtResource("13_0aota")
 
 [node name="lock" type="Button" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel2"]
 layout_mode = 1
@@ -933,6 +945,9 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "锁定"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel2"]
+stream = ExtResource("14_x1oud")
 
 [node name="itemPanel3" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
@@ -976,6 +991,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "12"
 icon = ExtResource("12_1ink0")
+script = ExtResource("13_0aota")
 
 [node name="lock" type="Button" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel3"]
 layout_mode = 1
@@ -989,6 +1005,9 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "锁定"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel3"]
+stream = ExtResource("14_x1oud")
 
 [node name="itemPanel4" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
@@ -1032,6 +1051,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "12"
 icon = ExtResource("12_1ink0")
+script = ExtResource("13_0aota")
 
 [node name="lock" type="Button" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel4"]
 layout_mode = 1
@@ -1045,6 +1065,9 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "锁定"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel4"]
+stream = ExtResource("14_x1oud")
 
 [node name="itemPanel5" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
@@ -1088,6 +1111,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "12"
 icon = ExtResource("12_1ink0")
+script = ExtResource("13_0aota")
 
 [node name="lock" type="Button" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel5"]
 layout_mode = 1
@@ -1101,6 +1125,9 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "锁定"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel5"]
+stream = ExtResource("14_x1oud")
 
 [node name="continue" type="Button" parent="CanvasLayer/nextWave"]
 layout_mode = 0
@@ -1275,5 +1302,10 @@ flameThrower = ExtResource("12_xh64b")
 
 [connection signal="timeout" from="playObjects/perLittleWave" to="playObjects" method="spawnPerLittleWave"]
 [connection signal="timeout" from="playObjects/eachSecond" to="playObjects" method="OnCountdownTick"]
+[connection signal="button_up" from="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel/price" to="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel/price" method="_on_BuyButton_pressed"]
+[connection signal="button_up" from="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel2/price" to="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel2/price" method="_on_BuyButton_pressed"]
+[connection signal="button_up" from="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel3/price" to="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel3/price" method="_on_BuyButton_pressed"]
+[connection signal="button_up" from="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel4/price" to="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel4/price" method="_on_BuyButton_pressed"]
+[connection signal="button_up" from="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel5/price" to="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel5/price" method="_on_BuyButton_pressed"]
 [connection signal="button_up" from="CanvasLayer/nextWave/continue" to="playObjects" method="enterNextWave"]
 [connection signal="button_up" from="CanvasLayer/nextWave/finish" to="playObjects" method="finishTheGame"]

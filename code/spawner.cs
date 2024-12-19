@@ -25,14 +25,14 @@ public partial class spawner : Node2D
     [Export] public Label lastTime;
     [Export] public HBoxContainer goodsContainer;
     public List<enemyBase> enemies = new();
-    private Node2D zx, ys;
+    [Export] private Node2D zx, ys;
     private Random random = new();
     private float xJL, yJL;
     private Vector2 lastPos, currentPos;
     public guanQia level;
     private wave currentWave;
     private int crtWaveNum;
-    private Panel nextWavePanel;
+    [Export] private Panel nextWavePanel;
     [Export] public PackedScene redX;
 
     [Export] private Timer countdownTimer;
@@ -43,12 +43,12 @@ public partial class spawner : Node2D
     public override void _Ready()
     {
         Instance = this;
-        zx = GetTree().CurrentScene.GetNode<Node2D>("land/zx");
-        ys = GetTree().CurrentScene.GetNode<Node2D>("land/ys");
+        /*zx = GetTree().CurrentScene.GetNode<Node2D>("land/zx");
+        ys = GetTree().CurrentScene.GetNode<Node2D>("land/ys");*/
         xJL = (ys.GlobalPosition - zx.GlobalPosition).X;
         yJL = (ys.GlobalPosition - zx.GlobalPosition).Y;
         lastPos = Vector2.Zero;
-        nextWavePanel = GetTree().CurrentScene.GetNode("CanvasLayer/nextWave") as Panel;
+        //nextWavePanel = GetTree().CurrentScene.GetNode("CanvasLayer/nextWave") as Panel;
         readAndStart();
     }
 
@@ -306,6 +306,7 @@ public partial class spawner : Node2D
             panel.GetNode<TextureRect>("TextureRect").Texture = currentWeapon.icon;
             panel.GetNode<Label>("name").Text = currentWeapon.weaponType.ToString();
             panel.GetNode<Label>("describe").Text = currentWeapon.discribe;
+            panel.GetNode<buy>("price").equipInfo = currentWeapon;
         }
     }
 

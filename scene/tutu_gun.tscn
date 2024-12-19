@@ -30,6 +30,7 @@ autostart = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_rjfc2")
+volume_db = -15.0
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(9, 0)

@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwnjxlos11f6t"]
+
+[ext_resource type="Script" path="res://code/StartUi.cs" id="1_fmpve"]
+[ext_resource type="Texture2D" uid="uid://bc1angmwgpbe1" path="res://resources/Tiny Wonder Forest 1.0/background.png" id="2_36872"]
+[ext_resource type="Texture2D" uid="uid://bbodd6585kpyk" path="res://resources/Tiny Wonder Forest 1.0/title.png" id="3_2jfat"]
+
+[node name="startUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fmpve")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(-0.871704, -52.4005)
+scale = Vector2(0.608604, 0.608604)
+texture = ExtResource("2_36872")
+
+[node name="Title" type="Sprite2D" parent="."]
+position = Vector2(-2, -173)
+scale = Vector2(0.609, 0.609)
+texture = ExtResource("3_2jfat")
+
+[node name="play" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -660.872
+offset_top = -171.401
+offset_right = -493.872
+offset_bottom = -64.4005
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 35
+text = "Play"
+
+[node name="edit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -660.872
+offset_top = -20.4005
+offset_right = -493.872
+offset_bottom = 86.5995
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 35
+text = "Edit
+"
+
+[node name="quit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -660.872
+offset_top = 130.599
+offset_right = -493.872
+offset_bottom = 237.599
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 35
+text = "Quit
+"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="button_up" from="play" to="." method="playIt"]
+[connection signal="button_up" from="edit" to="." method="editIt"]
+[connection signal="button_up" from="quit" to="." method="closeIt"]

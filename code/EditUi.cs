@@ -153,4 +153,12 @@ public partial class EditUi : Control
         sw.Write(yamlStr);
         sw.Close();
     }
+
+    public void backToStartUI()
+    {
+        var startUi = GD.Load<PackedScene>("res://scene/start_ui.tscn").Instantiate<StartUi>();
+        GetTree().CurrentScene.QueueFree();
+        GetTree().Root.AddChild(startUi);
+        GetTree().CurrentScene = startUi;
+    }
 }
