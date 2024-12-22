@@ -7,6 +7,8 @@ public partial class Coin : Area2D
     [Export] public float spd;
     private Vector2 direction;
     public bool canMove;
+    [Export] private AudioStreamPlayer clctSound;
+    [Export] private Timer timer;
 
     private player playerTarget;
 
@@ -24,6 +26,11 @@ public partial class Coin : Area2D
         GlobalPosition += spd * direction * (float)delta;
     }
 
+    public void desSelf()
+    {
+        QueueFree();
+    }
+
     public void flyToPlayer(Area2D player)
     {
         GD.Print($"player.CollisionLayer{player.CollisionLayer}");
@@ -33,9 +40,14 @@ public partial class Coin : Area2D
                 canMove = true;
                 break;
             case 32:
+                clctSound.Play();
+                timer.Start();
                 canMove = false;
                 playerTarget.MoneyValue += 1;
-                QueueFree();
+                Visible = false;
+                CollisionMask = 0;
+                CollisionLayer = 0;
+                //QueueFree();
                 break;
         }
     }

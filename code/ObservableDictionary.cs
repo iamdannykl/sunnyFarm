@@ -15,14 +15,17 @@ public class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>
         OnItemAdded?.Invoke(key, value, isFirstAdd); // 触发事件
     }
 
+    //public void set
+
     // 添加或更新的方法
     public new TValue this[TKey key]
     {
+        get => base[key];
         set
         {
             var isUpdate = ContainsKey(key);
             base[key] = value;
-            if (!isUpdate) OnItemAdded?.Invoke(key, value, false);
+            if (isUpdate) OnItemAdded?.Invoke(key, value, false);
         }
     }
 }

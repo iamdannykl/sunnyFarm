@@ -18,6 +18,7 @@ collision_mask = 4
 script = ExtResource("1_yut2r")
 blt = ExtResource("2_s63mg")
 atkValue = 4.0
+price = 12
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_77u22")

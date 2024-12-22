@@ -12,10 +12,13 @@ public class EquipInfo
     public weapons weaponType;
 
     //public string Name { get; set; }
+    public int price;
     public Array<Tags> Tags { get; set; }
     public Rarity Rarity { get; set; }
+    public bool isProps { get; set; }
 
-    public EquipInfo(string inDiscribe, weapons inType, Array<Tags> inTags, Rarity inRarity, Texture2D inIcon)
+    public EquipInfo(string inDiscribe, weapons inType, Array<Tags> inTags, Rarity inRarity, Texture2D inIcon,
+        int inPrice, bool inIsProps)
     {
         discribe = inDiscribe;
         weaponType = inType;
@@ -23,5 +26,7 @@ public class EquipInfo
         Tags = inTags;
         Rarity = inRarity;
         icon = inIcon;
+        price = inPrice;
+        isProps = inIsProps;
     }
 }

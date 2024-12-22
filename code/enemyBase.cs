@@ -12,6 +12,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
     [Export] public AnimationPlayer hitFlasher;
     [Export] public AnimationPlayer explodeAnim;
     [Export] public PackedScene atkLabel;
+    [Export] public Timer atkGap;
     public bool canMove = true;
     private List<Label> labels = new();
     private player player;
@@ -68,8 +69,14 @@ public partial class enemyBase : CharacterBody2D, Iattackble
         if (tileColl != null && tileColl.CollisionLayer == 2)
         {
             canMove = false;
+            atkGap.Start();
             GD.Print("no");
         }
+    }
+
+    public void atkPlayer()
+    {
+        player.CurrentHp -= atkValue;
     }
 
     public void youCanMove(Node2D playerColl)

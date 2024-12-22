@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bc1angmwgpbe1" path="res://resources/Tiny Wonder Forest 1.0/background.png" id="2_36872"]
 [ext_resource type="Texture2D" uid="uid://bbodd6585kpyk" path="res://resources/Tiny Wonder Forest 1.0/title.png" id="3_2jfat"]
 
-[node name="startUI" type="Control"]
+[node name="startUI" type="Control" node_paths=PackedStringArray("playButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fmpve")
+playButton = NodePath("play")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(-0.871704, -52.4005)
@@ -24,6 +25,7 @@ scale = Vector2(0.609, 0.609)
 texture = ExtResource("3_2jfat")
 
 [node name="play" type="Button" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5

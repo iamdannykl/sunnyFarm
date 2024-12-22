@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Godot;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -9,6 +10,20 @@ namespace SunnyFarm.code;
 public partial class player : CharacterBody2D
 {
     public static player Instance;
+    private float currentHp;
+
+    public float CurrentHp
+    {
+        get => currentHp;
+        set
+        {
+            var realValue = value;
+            if (realValue < 0) realValue = 0;
+            hpBar.Value = realValue;
+            hpBar.GetNode<Label>("Label").Text = $"Hp:{realValue.ToString(CultureInfo.InvariantCulture)}";
+            currentHp = value;
+        }
+    }
 
     [ExportCategory("valueDatas")] [Export]
     public float hp;
@@ -29,7 +44,6 @@ public partial class player : CharacterBody2D
 
     [Export] public CollisionShape2D collisionShape2D;
     [Export] public Label moneyShow;
-    public const float JumpVelocity = -400.0f;
     private AnimationPlayer animationPlayer;
     private bool isRt;
     private Vector2 direction;
@@ -42,6 +56,7 @@ public partial class player : CharacterBody2D
     public List<Marker2D> markers = new();
     [Export] private mainProperty zhuShuXing;
     [Export] public GridContainer equippedContainer;
+    [Export] public ProgressBar hpBar;
 
     public int MoneyValue
     {
@@ -103,6 +118,7 @@ public partial class player : CharacterBody2D
         ValuesList.Add(regeneration);
         ValuesList.Add(criticalRate);
         values = new ObservableDictionary<valueDataEnum, float>();
+        //values[]
         foreach (var variable in GetNode<Node2D>("markers").GetChildren()) markers.Add((Marker2D)variable);
         AddWeaponsToPlayer();
         displayWeaponsInGridContainer();
@@ -112,17 +128,63 @@ public partial class player : CharacterBody2D
         {
             GD.Print($"Key '{key}' added with value {value}");
             if (!isFst)
+            {
                 zhuShuXing.SetItemText((int)key, $"{key}: {value}");
+                matchEnumAndHuiDiao(key, value);
+            }
             else
+            {
                 zhuShuXing.AddItem($"{key}: {value}");
+            }
             //zhuShuXing.AddItem($"{key}: {value}");
         };
         var i = 0;
         foreach (valueDataEnum value in Enum.GetValues(typeof(valueDataEnum))) values.Add(value, ValuesList[i++], true);
         collisionShape2D.Shape.Set("radius", pickRadius + values.GetValueOrDefault(valueDataEnum.range, 0));
-
+        hpBar.MaxValue = values[valueDataEnum.hp];
+        CurrentHp = values[valueDataEnum.hp];
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         //moneyShow = GetTree().CurrentScene.GetNode<Label>("CanvasLayer/showMoney");
+    }
+
+    private void matchEnumAndHuiDiao(valueDataEnum inType, float inValue)
+    {
+        switch (inType)
+        {
+            case valueDataEnum.hp:
+                hpBar.MaxValue = inValue;
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            case valueDataEnum.atk:
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            case valueDataEnum.def:
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            case valueDataEnum.speed:
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            case valueDataEnum.range:
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            case valueDataEnum.spAtk:
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            case valueDataEnum.luckyValue:
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            case valueDataEnum.drain:
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            case valueDataEnum.regeneration:
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            case valueDataEnum.criticalRate:
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            default:
+                break;
+        }
     }
 
     public override void _PhysicsProcess(double delta)

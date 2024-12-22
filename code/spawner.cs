@@ -243,6 +243,24 @@ public partial class spawner : Node2D
         return weights;
     }
 
+    private EquipInfo findSingleEquip(List<Tags> tags, Rarity rarity)
+    {
+        // 筛选符合稀有度的武器
+        var candidates =
+            /*new List<Equip>();*/
+            MatchIt.Instance.equipInfos.Where(weapon => weapon.Rarity == rarity).ToList();
+        // 如果有玩家武器标签，优先选择含有相同标签的武器
+        if (tags != null && tags.Count > 0)
+        {
+            var taggedCandidates = candidates
+                .Where(weapon => weapon.Tags.Any(tag => tags.Contains(tag)))
+                .ToList();
+            if (taggedCandidates.Count > 0) candidates = taggedCandidates;
+        }
+
+        return candidates.OrderBy(x => Guid.NewGuid()).FirstOrDefault() ?? findSingleEquip(tags, Rarity.Common);
+    }
+
     public List<EquipInfo> RefreshShop(int wave, List<Tags> playerWeaponTags)
     {
         // 获取调整后的稀有度权重
@@ -253,20 +271,9 @@ public partial class spawner : Node2D
         {
             // 按权重随机选择稀有度
             var selectedRarity = WeightedRandomSelect(rarityWeights);
-            // 筛选符合稀有度的武器
-            var candidates =
-                /*new List<Equip>();*/
-                MatchIt.Instance.equipInfos.Where(weapon => weapon.Rarity == selectedRarity).ToList();
-            // 如果有玩家武器标签，优先选择含有相同标签的武器
-            if (playerWeaponTags != null && playerWeaponTags.Count > 0)
-            {
-                var taggedCandidates = candidates
-                    .Where(weapon => weapon.Tags.Any(tag => playerWeaponTags.Contains(tag)))
-                    .ToList();
-                if (taggedCandidates.Count > 0) candidates = taggedCandidates;
-            }
 
-            weaponList.Add(candidates.OrderBy(x => Guid.NewGuid()).First());
+
+            weaponList.Add(findSingleEquip(playerWeaponTags, selectedRarity));
         }
 
         return weaponList;
@@ -307,6 +314,7 @@ public partial class spawner : Node2D
             panel.GetNode<Label>("name").Text = currentWeapon.weaponType.ToString();
             panel.GetNode<Label>("describe").Text = currentWeapon.discribe;
             panel.GetNode<buy>("price").equipInfo = currentWeapon;
+            panel.GetNode<buy>("price").Text = currentWeapon.price.ToString();
         }
     }
 
@@ -319,5 +327,10 @@ public partial class spawner : Node2D
         /*for (var i = 0; i < wave; i++)
             EndWave(i, playerWeapons);*/
         EndWave(crtWaveNum, playerWeapons);
+    }
+
+    public void refreshShop()
+    {
+        TestShop();
     }
 }

@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b25vrjqvje8m8"]
+[gd_scene load_steps=8 format=3 uid="uid://b25vrjqvje8m8"]
 
 [ext_resource type="Script" path="res://code/Coin.cs" id="1_5gghf"]
 [ext_resource type="Texture2D" uid="uid://btbm4naa84yf7" path="res://resources/brackeys_platformer_assets/sprites/coin.png" id="1_rr7uo"]
+[ext_resource type="AudioStream" uid="uid://b6aqp0d3dkddk" path="res://audio/brotato/birth_begin_sound.wav" id="3_l2jlp"]
 
 [sub_resource type="Animation" id="Animation_0wpww"]
 length = 0.001
@@ -116,11 +117,13 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ep64"]
 
-[node name="coin" type="Area2D"]
+[node name="coin" type="Area2D" node_paths=PackedStringArray("clctSound", "timer")]
 collision_layer = 8
 collision_mask = 48
 script = ExtResource("1_5gghf")
 spd = 200.0
+clctSound = NodePath("AudioStreamPlayer")
+timer = NodePath("Timer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_rr7uo")
@@ -137,4 +140,13 @@ autoplay = "spin"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7ep64")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_l2jlp")
+volume_db = -12.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
 [connection signal="area_entered" from="." to="." method="flyToPlayer"]
+[connection signal="timeout" from="Timer" to="." method="desSelf"]

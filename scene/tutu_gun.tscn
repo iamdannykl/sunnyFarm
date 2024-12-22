@@ -17,6 +17,7 @@ atkValue = 7.0
 icon = ExtResource("3_hcuwj")
 discribe = "tutu"
 weaponType = 1
+price = 13
 MyTagsList = Array[int]([0])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

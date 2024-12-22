@@ -67,7 +67,10 @@ public partial class baseGun : Equip
             var bltNew = MatchIt.Instance.matchBullet(btp).Instantiate() as Bullet;
             if (bltNew == null) return;
             bltNew.atkValue = atkValue + _player.values.GetValueOrDefault(valueDataEnum.atk, 0);
-            bulletMarker.AddChild(bltNew);
+            bltNew.GlobalPosition = bulletMarker.GlobalPosition;
+            bltNew.GlobalRotation = bulletMarker.GlobalRotation;
+            spawner.Instance.AddChild(bltNew);
+            //bulletMarker.AddChild(bltNew);
 
             //GD.Print(Zaodian.Instance.GetNoiseBasedPosition(GlobalPosition, 0.3f));
         }

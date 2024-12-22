@@ -16,6 +16,7 @@ atkValue = 2.0
 icon = ExtResource("2_cwxwy")
 discribe = "high shoot speed gun"
 weaponType = 3
+price = 40
 Rarity = 2
 MyTagsList = Array[int]([0])
 
