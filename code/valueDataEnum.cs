@@ -11,5 +11,6 @@ public enum valueDataEnum
     luckyValue = 6,
     drain = 7,
     regeneration = 8,
-    criticalRate = 9
+    criticalRate = 9,
+    crtHp=10
 }

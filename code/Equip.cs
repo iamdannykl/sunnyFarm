@@ -12,6 +12,7 @@ public partial class Equip : Area2D
     [Export] public string discribe;
 
     [Export] public weapons weaponType;
+    [Export]public zhuangBei zhuangBeiType;
 
     [Export] public int price;
     //public string Name { get; set; }
@@ -21,4 +22,9 @@ public partial class Equip : Area2D
 
     [Export] public Array<Tags> MyTagsList { get; set; }
     [Export] public bool isProps;
+
+    public virtual void getThisEqip()//执行下列操作当获取此Equip时
+    {
+        
+    }
 }
