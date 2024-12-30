@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://dhhld26l4kghn"]
+[gd_scene load_steps=43 format=4 uid="uid://dhhld26l4kghn"]
 
 [ext_resource type="Texture2D" uid="uid://5vmsdvfl2p88" path="res://resources/Tiny Wonder Forest 1.0/tilemaps/spring tilemap.png" id="1_6pij1"]
 [ext_resource type="TileSet" uid="uid://cwiqqys5h605s" path="res://scene/buildings.tres" id="2_8cblm"]
@@ -19,9 +19,11 @@
 [ext_resource type="AudioStream" uid="uid://c5ilx45gnjmf0" path="res://audio/brotato/buy.wav" id="14_x1oud"]
 [ext_resource type="Script" path="res://code/mainProperty.cs" id="15_02ofs"]
 [ext_resource type="Script" path="res://code/ShowFps.cs" id="15_ahdy4"]
+[ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick_instantiator.gd" id="17_7fd7u"]
 [ext_resource type="PackedScene" uid="uid://b25vrjqvje8m8" path="res://scene/coin.tscn" id="17_p63fr"]
 [ext_resource type="PackedScene" uid="uid://cxerjmrmly5t8" path="res://scene/bullet.tscn" id="19_xphig"]
 [ext_resource type="PackedScene" uid="uid://bsbyl3rpv1cl2" path="res://scene/short_gun.tscn" id="21_gbmrn"]
+[ext_resource type="PackedScene" uid="uid://bb8fycgg2lrfm" path="res://scene/infinity_edge.tscn" id="24_h0mug"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dn0ki"]
 texture = ExtResource("1_6pij1")
@@ -815,6 +817,15 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 
+[node name="Virtual Joystick" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 23.0
+offset_top = 604.0
+offset_right = 63.0
+offset_bottom = 644.0
+script = ExtResource("17_7fd7u")
+
 [node name="nextWave" type="Panel" parent="CanvasLayer"]
 visible = false
 anchors_preset = 15
@@ -845,6 +856,7 @@ theme_override_constants/separation = 30
 [node name="itemPanel" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel"]
 layout_mode = 0
@@ -858,7 +870,7 @@ offset_left = 81.0
 offset_top = 17.0
 offset_right = 161.0
 offset_bottom = 62.0
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 18
 text = "XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -905,6 +917,7 @@ stream = ExtResource("14_x1oud")
 [node name="itemPanel2" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel2"]
 layout_mode = 0
@@ -918,7 +931,7 @@ offset_left = 81.0
 offset_top = 17.0
 offset_right = 161.0
 offset_bottom = 62.0
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 18
 text = "XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -965,6 +978,7 @@ stream = ExtResource("14_x1oud")
 [node name="itemPanel3" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel3"]
 layout_mode = 0
@@ -978,7 +992,7 @@ offset_left = 81.0
 offset_top = 17.0
 offset_right = 161.0
 offset_bottom = 62.0
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 18
 text = "XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1025,6 +1039,7 @@ stream = ExtResource("14_x1oud")
 [node name="itemPanel4" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel4"]
 layout_mode = 0
@@ -1038,7 +1053,7 @@ offset_left = 81.0
 offset_top = 17.0
 offset_right = 161.0
 offset_bottom = 62.0
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 18
 text = "XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1085,6 +1100,7 @@ stream = ExtResource("14_x1oud")
 [node name="itemPanel5" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel5"]
 layout_mode = 0
@@ -1098,7 +1114,7 @@ offset_left = 81.0
 offset_top = 17.0
 offset_right = 161.0
 offset_bottom = 62.0
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 18
 text = "XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1348,6 +1364,7 @@ normalBlt = ExtResource("19_xphig")
 tutuGun = ExtResource("6_aa2ww")
 shortGun = ExtResource("21_gbmrn")
 flameThrower = ExtResource("12_xh64b")
+infinityEdge = ExtResource("24_h0mug")
 
 [connection signal="timeout" from="playObjects/perLittleWave" to="playObjects" method="spawnPerLittleWave"]
 [connection signal="timeout" from="playObjects/eachSecond" to="playObjects" method="OnCountdownTick"]

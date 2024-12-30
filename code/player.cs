@@ -37,6 +37,7 @@ public partial class player : CharacterBody2D
     [Export] public float drain;
     [Export] public float regeneration;
     [Export] public float criticalRate;
+    [Export] public float crtHp;
     public List<float> ValuesList = new();
 
     [ExportCategory("normalValues")] [Export]
@@ -117,6 +118,7 @@ public partial class player : CharacterBody2D
         ValuesList.Add(drain);
         ValuesList.Add(regeneration);
         ValuesList.Add(criticalRate);
+        ValuesList.Add(crtHp);
         values = new ObservableDictionary<valueDataEnum, float>();
         //values[]
         foreach (var variable in GetNode<Node2D>("markers").GetChildren()) markers.Add((Marker2D)variable);
@@ -180,6 +182,9 @@ public partial class player : CharacterBody2D
                 GD.Print($"{inType} has been set to {inValue}");
                 break;
             case valueDataEnum.criticalRate:
+                GD.Print($"{inType} has been set to {inValue}");
+                break;
+            case valueDataEnum.crtHp:
                 GD.Print($"{inType} has been set to {inValue}");
                 break;
             default:

@@ -311,7 +311,14 @@ public partial class spawner : Node2D
             var panel = goodsContainer.GetChild<Panel>(i);
             var currentWeapon = shopWeapons[i];
             panel.GetNode<TextureRect>("TextureRect").Texture = currentWeapon.icon;
-            panel.GetNode<Label>("name").Text = currentWeapon.weaponType.ToString();
+            if (!currentWeapon.isProps)
+            {
+                panel.GetNode<Label>("name").Text = currentWeapon.weaponType.ToString();
+            }
+            else
+            {GD.Print("无尽："+currentWeapon.zhuangBeiType);
+                panel.GetNode<Label>("name").Text = currentWeapon.zhuangBeiType.ToString();
+            }
             panel.GetNode<Label>("describe").Text = currentWeapon.discribe;
             panel.GetNode<buy>("price").equipInfo = currentWeapon;
             panel.GetNode<buy>("price").Text = currentWeapon.price.ToString();
