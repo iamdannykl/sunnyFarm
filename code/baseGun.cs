@@ -79,4 +79,9 @@ public partial class baseGun : Equip
             GlobalRotation = 0;
         }
     }
+
+    public override void getThisEqip()
+    {
+        
+    }
 }

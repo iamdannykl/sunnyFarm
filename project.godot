@@ -23,6 +23,10 @@ window/stretch/mode="viewport"
 
 project/assembly_name="Sunny Farm"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/virtual_joystick/plugin.cfg")
+
 [input]
 
 ui_left={
@@ -70,3 +74,4 @@ ui_down={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+textures/vram_compression/import_etc2_astc=true

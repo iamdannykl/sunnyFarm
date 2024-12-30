@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bb8fycgg2lrfm"]
+
+[ext_resource type="PackedScene" uid="uid://btpyrwjrxsx8q" path="res://scene/base_zhuang_bei.tscn" id="1_b6h8v"]
+
+[node name="infinityEdge" instance=ExtResource("1_b6h8v")]
+MyTagsList = Array[int]([0])
