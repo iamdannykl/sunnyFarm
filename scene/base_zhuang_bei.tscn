@@ -1,3 +1,12 @@
-[gd_scene format=3 uid="uid://btpyrwjrxsx8q"]
+[gd_scene load_steps=3 format=3 uid="uid://btpyrwjrxsx8q"]
 
-[node name="baseZhuangBei" type="Node2D"]
+[ext_resource type="Script" path="res://code/baseZhuangBei.cs" id="1_yum0y"]
+[ext_resource type="Texture2D" uid="uid://cge1k5jk46hml" path="res://zhuangBei/infinityEdge/infinite.png" id="2_canng"]
+
+[node name="baseZhuangBei" type="Area2D"]
+script = ExtResource("1_yum0y")
+icon = ExtResource("2_canng")
+discribe = "infinity edge"
+price = 10
+MyTagsList = Array[int]([1])
+isProps = true
