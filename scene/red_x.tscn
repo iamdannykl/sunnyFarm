@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cg5erwllb5khg"]
 
 [ext_resource type="Texture2D" uid="uid://cyc8e88qina5y" path="res://Xicon.png" id="1_krpo4"]
-[ext_resource type="Script" path="res://code/RedX.cs" id="2_fyu3c"]
+[ext_resource type="Script" uid="uid://bpcdocxj74qsr" path="res://code/RedX.cs" id="2_fyu3c"]
 
 [sub_resource type="Animation" id="Animation_x7yea"]
 length = 0.001
@@ -69,8 +69,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5x6hf"]
 _data = {
-"RESET": SubResource("Animation_x7yea"),
-"shake": SubResource("Animation_6tc8t")
+&"RESET": SubResource("Animation_x7yea"),
+&"shake": SubResource("Animation_6tc8t")
 }
 
 [node name="redX" type="Sprite2D"]

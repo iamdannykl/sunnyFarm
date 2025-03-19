@@ -3,23 +3,23 @@
 [ext_resource type="Texture2D" uid="uid://5vmsdvfl2p88" path="res://resources/Tiny Wonder Forest 1.0/tilemaps/spring tilemap.png" id="1_6pij1"]
 [ext_resource type="TileSet" uid="uid://cwiqqys5h605s" path="res://scene/buildings.tres" id="2_8cblm"]
 [ext_resource type="PackedScene" uid="uid://cpeqlj46vmwls" path="res://scene/house.tscn" id="2_cp7se"]
-[ext_resource type="Script" path="res://code/player.cs" id="2_ghgb8"]
+[ext_resource type="Script" uid="uid://c3rgr3kgna6t" path="res://code/player.cs" id="2_ghgb8"]
 [ext_resource type="Texture2D" uid="uid://dnkuool4yp32d" path="res://resources/Tiny Wonder Forest 1.0/characters/main character/attack and die.png" id="3_1pkg2"]
 [ext_resource type="Texture2D" uid="uid://gibi7osibs61" path="res://resources/Tiny Wonder Forest 1.0/characters/main character/walk and idle.png" id="4_48j37"]
-[ext_resource type="Script" path="res://code/spawner.cs" id="4_im854"]
+[ext_resource type="Script" uid="uid://p42wks1mw4ht" path="res://code/spawner.cs" id="4_im854"]
 [ext_resource type="PackedScene" uid="uid://cg5erwllb5khg" path="res://scene/red_x.tscn" id="6_2crqq"]
 [ext_resource type="PackedScene" uid="uid://ju2iihuohobq" path="res://scene/tutu_gun.tscn" id="6_aa2ww"]
 [ext_resource type="PackedScene" uid="uid://ckdy6r52ifnlj" path="res://scene/blueBird.tscn" id="6_fxihv"]
-[ext_resource type="Script" path="res://code/MatchIt.cs" id="11_w7swr"]
+[ext_resource type="Script" uid="uid://bkc0oav3m4waj" path="res://code/MatchIt.cs" id="11_w7swr"]
 [ext_resource type="Texture2D" uid="uid://bi4t7vibrtpfu" path="res://resources/sprite/item/hall_b/item-34.png" id="12_1ink0"]
 [ext_resource type="PackedScene" uid="uid://l25siv5de70n" path="res://scene/flamethrower.tscn" id="12_xh64b"]
 [ext_resource type="PackedScene" uid="uid://bewql7fesr4sx" path="res://scene/ghost.tscn" id="12_ybdao"]
-[ext_resource type="Script" path="res://code/buy.cs" id="13_0aota"]
+[ext_resource type="Script" uid="uid://cmhenoljiq8hp" path="res://code/buy.cs" id="13_0aota"]
 [ext_resource type="Texture2D" uid="uid://b4d5qwui0onqy" path="res://resources/sprite/item/hall_c/item _25.png" id="13_q8wqb"]
 [ext_resource type="AudioStream" uid="uid://c5ilx45gnjmf0" path="res://audio/brotato/buy.wav" id="14_x1oud"]
-[ext_resource type="Script" path="res://code/mainProperty.cs" id="15_02ofs"]
-[ext_resource type="Script" path="res://code/ShowFps.cs" id="15_ahdy4"]
-[ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick_instantiator.gd" id="17_7fd7u"]
+[ext_resource type="Script" uid="uid://d2rip6shr46qv" path="res://code/mainProperty.cs" id="15_02ofs"]
+[ext_resource type="Script" uid="uid://cfb5oj0geimgm" path="res://code/ShowFps.cs" id="15_ahdy4"]
+[ext_resource type="Script" uid="uid://c1xb1pyyu2wnw" path="res://addons/virtual_joystick/virtual_joystick_instantiator.gd" id="17_7fd7u"]
 [ext_resource type="PackedScene" uid="uid://b25vrjqvje8m8" path="res://scene/coin.tscn" id="17_p63fr"]
 [ext_resource type="PackedScene" uid="uid://cxerjmrmly5t8" path="res://scene/bullet.tscn" id="19_xphig"]
 [ext_resource type="PackedScene" uid="uid://bsbyl3rpv1cl2" path="res://scene/short_gun.tscn" id="21_gbmrn"]
@@ -627,11 +627,11 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ob8sr"]
 _data = {
-"RESET": SubResource("Animation_b0ykr"),
-"lftIdle": SubResource("Animation_8cawv"),
-"lftWalk": SubResource("Animation_1tr1i"),
-"rtIdle": SubResource("Animation_yjlmr"),
-"rtWalk": SubResource("Animation_4ybci")
+&"RESET": SubResource("Animation_b0ykr"),
+&"lftIdle": SubResource("Animation_8cawv"),
+&"lftWalk": SubResource("Animation_1tr1i"),
+&"rtIdle": SubResource("Animation_yjlmr"),
+&"rtWalk": SubResource("Animation_4ybci")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_boj0m"]
@@ -728,7 +728,7 @@ region_rect = Rect2(0, 0, 48, 24)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="playObjects/CharacterBody2D"]
 libraries = {
-"": SubResource("AnimationLibrary_ob8sr")
+&"": SubResource("AnimationLibrary_ob8sr")
 }
 
 [node name="Camera2D" type="Camera2D" parent="playObjects/CharacterBody2D"]

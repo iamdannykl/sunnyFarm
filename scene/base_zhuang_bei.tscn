@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://btpyrwjrxsx8q"]
 
-[ext_resource type="Script" path="res://code/baseZhuangBei.cs" id="1_yum0y"]
+[ext_resource type="Script" uid="uid://bw17krs20wwpm" path="res://code/baseZhuangBei.cs" id="1_yum0y"]
 [ext_resource type="Texture2D" uid="uid://cge1k5jk46hml" path="res://zhuangBei/infinityEdge/infinite.png" id="2_canng"]
 
 [node name="baseZhuangBei" type="Area2D"]

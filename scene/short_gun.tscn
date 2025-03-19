@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bsbyl3rpv1cl2"]
 
-[ext_resource type="Script" path="res://code/bugun.cs" id="1_2b62a"]
+[ext_resource type="Script" uid="uid://cx68gxjmrfknj" path="res://code/bugun.cs" id="1_2b62a"]
 [ext_resource type="PackedScene" uid="uid://cxerjmrmly5t8" path="res://scene/bullet.tscn" id="2_d8b2t"]
 [ext_resource type="Texture2D" uid="uid://cvhsjgat5nj8s" path="res://zhuangBei/shortGun/short_gun.tres" id="3_xbxk4"]
 [ext_resource type="AudioStream" uid="uid://bnrursvt8gg11" path="res://audio/sfx/shooting/Shooting0001.ogg" id="4_3qmn3"]

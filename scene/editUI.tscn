@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://duuq0pa2qy0ix"]
 
-[ext_resource type="Script" path="res://code/EditUi.cs" id="1_eihse"]
+[ext_resource type="Script" uid="uid://baq3bg6jid2bj" path="res://code/EditUi.cs" id="1_eihse"]
 [ext_resource type="PackedScene" uid="uid://cw80mv38t02qq" path="res://scene/enemy_panel.tscn" id="2_fcblw"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("vBoxContainer", "waveN", "lWaveN")]

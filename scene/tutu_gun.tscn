@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://ju2iihuohobq"]
 
-[ext_resource type="Script" path="res://code/bugun.cs" id="1_idlfc"]
+[ext_resource type="Script" uid="uid://cx68gxjmrfknj" path="res://code/bugun.cs" id="1_idlfc"]
 [ext_resource type="PackedScene" uid="uid://cxerjmrmly5t8" path="res://scene/bullet.tscn" id="2_17mi1"]
 [ext_resource type="Texture2D" uid="uid://c30xdhtnp0jr1" path="res://zhuangBei/tutuGun/tutu_gun.tres" id="3_hcuwj"]
 [ext_resource type="AudioStream" uid="uid://2uo8j3utb541" path="res://audio/sfx/shooting/Shooting0007.ogg" id="4_rjfc2"]

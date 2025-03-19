@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://b25vrjqvje8m8"]
 
-[ext_resource type="Script" path="res://code/Coin.cs" id="1_5gghf"]
+[ext_resource type="Script" uid="uid://ctej5vflcgan8" path="res://code/Coin.cs" id="1_5gghf"]
 [ext_resource type="Texture2D" uid="uid://btbm4naa84yf7" path="res://resources/brackeys_platformer_assets/sprites/coin.png" id="1_rr7uo"]
 [ext_resource type="AudioStream" uid="uid://b6aqp0d3dkddk" path="res://audio/brotato/birth_begin_sound.wav" id="3_l2jlp"]
 
@@ -111,8 +111,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o2mts"]
 _data = {
-"RESET": SubResource("Animation_0wpww"),
-"spin": SubResource("Animation_pj0sc")
+&"RESET": SubResource("Animation_0wpww"),
+&"spin": SubResource("Animation_pj0sc")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ep64"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://bewql7fesr4sx"]
 
-[ext_resource type="Script" path="res://code/Ghost.cs" id="1_uy2ph"]
+[ext_resource type="Script" uid="uid://dydwna2isfde6" path="res://code/Ghost.cs" id="1_uy2ph"]
 [ext_resource type="Shader" uid="uid://cwonxegibkw04" path="res://scene/blueBird.tres" id="2_o0aq4"]
 [ext_resource type="PackedScene" uid="uid://vylk4t7bbscb" path="res://scene/atk_label.tscn" id="2_taesm"]
 [ext_resource type="Texture2D" uid="uid://c35ko1xqrtdpy" path="res://resources/Enemies/Ghost/Idle (44x30).png" id="4_0yvj0"]
@@ -112,8 +112,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u1s1e"]
 _data = {
-"RESET": SubResource("Animation_1wmxq"),
-"idle": SubResource("Animation_35aep")
+&"RESET": SubResource("Animation_1wmxq"),
+&"idle": SubResource("Animation_35aep")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_idjji"]
@@ -223,8 +223,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wyf0g"]
 _data = {
-"RESET": SubResource("Animation_1t5i5"),
-"flash": SubResource("Animation_q4gt5")
+&"RESET": SubResource("Animation_1t5i5"),
+&"flash": SubResource("Animation_q4gt5")
 }
 
 [sub_resource type="Gradient" id="Gradient_ryv7i"]
@@ -349,8 +349,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hnhq0"]
 _data = {
-"RESET": SubResource("Animation_hxrct"),
-"explode": SubResource("Animation_tvnr5")
+&"RESET": SubResource("Animation_hxrct"),
+&"explode": SubResource("Animation_tvnr5")
 }
 
 [node name="ghost" type="CharacterBody2D" node_paths=PackedStringArray("hitFlasher", "explodeAnim", "atkGap")]
