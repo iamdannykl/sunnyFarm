@@ -15,7 +15,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
     [Export] public Timer atkGap;
     public bool canMove = true;
     private List<Label> labels = new();
-    private player player;
+    private BasicsCore _basicsCore;
     private Vector2 direction;
     private Sprite2D sprite2D;
     private bool hasDropCoin;
@@ -58,9 +58,9 @@ public partial class enemyBase : CharacterBody2D, Iattackble
 
     public override void _Ready()
     {
-        player = GetTree().CurrentScene.GetNode<player>("playObjects/CharacterBody2D");
+        _basicsCore = GetTree().CurrentScene.GetNode<BasicsCore>("playObjects/CharacterBody2D");
         sprite2D = GetNode<Sprite2D>("Sprite2D");
-        GD.Print("get" + player.Name);
+        GD.Print("get" + _basicsCore.Name);
     }
 
     public void fbdMove(Node2D playerColl)
@@ -76,7 +76,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
 
     public void atkPlayer()
     {
-        player.CurrentHp -= atkValue;
+        _basicsCore.CurrentHp -= atkValue;
     }
 
     public void youCanMove(Node2D playerColl)
@@ -92,7 +92,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
     public override void _PhysicsProcess(double delta)
     {
         if (!canMove) return;
-        direction = GlobalPosition.DirectionTo(player.GlobalPosition);
+        direction = GlobalPosition.DirectionTo(_basicsCore.GlobalPosition);
         if (direction.X < 0)
             sprite2D.FlipH = false;
         else if (direction.X > 0) sprite2D.FlipH = true;

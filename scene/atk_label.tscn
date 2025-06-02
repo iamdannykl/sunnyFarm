@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://vylk4t7bbscb"]
 
-[ext_resource type="Script" path="res://code/AtkLabel.cs" id="1_dbi3t"]
+[ext_resource type="Script" uid="uid://dff4srgd8wvid" path="res://code/AtkLabel.cs" id="1_dbi3t"]
 
 [node name="atkLabel" type="Label"]
 offset_right = 40.0

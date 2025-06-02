@@ -7,9 +7,9 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace SunnyFarm.code;
 
-public partial class player : CharacterBody2D
+public partial class BasicsCore : CharacterBody2D
 {
-    public static player Instance;
+    public static BasicsCore Instance;
     private float currentHp;
 
     public float CurrentHp
@@ -192,7 +192,7 @@ public partial class player : CharacterBody2D
         }
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _Process(double delta)
     {
         direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
         if (direction != Vector2.Zero)

@@ -17,7 +17,7 @@ public partial class baseGun : Equip
     [Export] public float atkValue;
     private Sprite2D gunImage;
     private Godot.Collections.Array<Area2D> enemyList = new();
-    private player _player;
+    private BasicsCore _basicsCore;
     private Marker2D bulletMarker;
 
     private AudioStreamPlayer bulletSound;
@@ -26,7 +26,7 @@ public partial class baseGun : Equip
     public override void _Ready()
     {
         gunImage = GetNode<Sprite2D>("Sprite2D");
-        _player = GetParent().GetParent().GetParent<player>();
+        _basicsCore = GetParent().GetParent().GetParent<BasicsCore>();
         bulletMarker = GetNode<Marker2D>("Marker2D");
         bulletSound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
     }
@@ -66,7 +66,7 @@ public partial class baseGun : Equip
             bulletSound.Play();
             var bltNew = MatchIt.Instance.matchBullet(btp).Instantiate() as Bullet;
             if (bltNew == null) return;
-            bltNew.atkValue = atkValue + _player.values.GetValueOrDefault(valueDataEnum.atk, 0);
+            bltNew.atkValue = atkValue + _basicsCore.values.GetValueOrDefault(valueDataEnum.atk, 0);
             bltNew.GlobalPosition = bulletMarker.GlobalPosition;
             bltNew.GlobalRotation = bulletMarker.GlobalRotation;
             spawner.Instance.AddChild(bltNew);

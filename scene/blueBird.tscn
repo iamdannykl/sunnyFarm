@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://ckdy6r52ifnlj"]
 
 [ext_resource type="Texture2D" uid="uid://bqi714nc4v3on" path="res://resources/Enemies/BlueBird/Flying (32x32).png" id="1_1koac"]
-[ext_resource type="Script" path="res://code/BlueBird.cs" id="1_c6fjm"]
+[ext_resource type="Script" uid="uid://uy1kf845mx2a" path="res://code/BlueBird.cs" id="1_c6fjm"]
 [ext_resource type="Shader" uid="uid://cwonxegibkw04" path="res://scene/blueBird.tres" id="2_bgb8q"]
 [ext_resource type="PackedScene" uid="uid://vylk4t7bbscb" path="res://scene/atk_label.tscn" id="2_rbjlo"]
 
@@ -112,8 +112,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u1s1e"]
 _data = {
-"RESET": SubResource("Animation_1wmxq"),
-"idle": SubResource("Animation_35aep")
+&"RESET": SubResource("Animation_1wmxq"),
+&"idle": SubResource("Animation_35aep")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o3qq7"]
@@ -223,8 +223,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wyf0g"]
 _data = {
-"RESET": SubResource("Animation_1t5i5"),
-"flash": SubResource("Animation_q4gt5")
+&"RESET": SubResource("Animation_1t5i5"),
+&"flash": SubResource("Animation_q4gt5")
 }
 
 [sub_resource type="Gradient" id="Gradient_7qm3o"]
@@ -349,8 +349,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hnhq0"]
 _data = {
-"RESET": SubResource("Animation_hxrct"),
-"explode": SubResource("Animation_tvnr5")
+&"RESET": SubResource("Animation_hxrct"),
+&"explode": SubResource("Animation_tvnr5")
 }
 
 [node name="blueBird" type="CharacterBody2D" node_paths=PackedStringArray("hitFlasher", "explodeAnim", "atkGap")]

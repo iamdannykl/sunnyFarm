@@ -329,7 +329,7 @@ public partial class spawner : Node2D
     {
         GD.Print("ending wave");
         var wave = 100; // 当前波数
-        var playerWeapons = player.Instance.playerWeapons;
+        var playerWeapons = BasicsCore.Instance.playerWeapons;
         GD.Print($"playerWeapons: {playerWeapons.Count}");
         /*for (var i = 0; i < wave; i++)
             EndWave(i, playerWeapons);*/

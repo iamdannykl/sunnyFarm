@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://l25siv5de70n"]
 
-[ext_resource type="Script" path="res://code/Flamethrower.cs" id="1_mjruv"]
+[ext_resource type="Script" uid="uid://cbl0uy3s2t5ya" path="res://code/Flamethrower.cs" id="1_mjruv"]
 [ext_resource type="Texture2D" uid="uid://cuivqyq32tjan" path="res://resources/sprite/weapon/weapon0013/weapon0014-export.png" id="2_cwxwy"]
 [ext_resource type="AudioStream" uid="uid://cfy8xwlkuh7ae" path="res://audio/brotato/gun_machinegun_auto_heavy_shot_01.wav" id="3_3m5vp"]
 

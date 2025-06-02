@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://bewql7fesr4sx"]
 
-[ext_resource type="Script" path="res://code/Ghost.cs" id="1_uy2ph"]
+[ext_resource type="Script" uid="uid://c0us6cn40swtq" path="res://code/Ghost.cs" id="1_uy2ph"]
 [ext_resource type="Shader" uid="uid://cwonxegibkw04" path="res://scene/blueBird.tres" id="2_o0aq4"]
 [ext_resource type="PackedScene" uid="uid://vylk4t7bbscb" path="res://scene/atk_label.tscn" id="2_taesm"]
 [ext_resource type="Texture2D" uid="uid://c35ko1xqrtdpy" path="res://resources/Enemies/Ghost/Idle (44x30).png" id="4_0yvj0"]
@@ -112,8 +112,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u1s1e"]
 _data = {
-"RESET": SubResource("Animation_1wmxq"),
-"idle": SubResource("Animation_35aep")
+&"RESET": SubResource("Animation_1wmxq"),
+&"idle": SubResource("Animation_35aep")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_idjji"]
@@ -223,9 +223,11 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wyf0g"]
 _data = {
-"RESET": SubResource("Animation_1t5i5"),
-"flash": SubResource("Animation_q4gt5")
+&"RESET": SubResource("Animation_1t5i5"),
+&"flash": SubResource("Animation_q4gt5")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4y4tf"]
 
 [sub_resource type="Gradient" id="Gradient_ryv7i"]
 colors = PackedColorArray(1, 0, 0, 1, 0.901961, 0, 0.0705882, 1)
@@ -251,8 +253,6 @@ scale_min = 2.5
 scale_max = 3.5
 scale_curve = SubResource("CurveTexture_1hf0o")
 color_ramp = SubResource("GradientTexture1D_sysvs")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4y4tf"]
 
 [sub_resource type="Animation" id="Animation_hxrct"]
 length = 0.001
@@ -349,8 +349,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hnhq0"]
 _data = {
-"RESET": SubResource("Animation_hxrct"),
-"explode": SubResource("Animation_tvnr5")
+&"RESET": SubResource("Animation_hxrct"),
+&"explode": SubResource("Animation_tvnr5")
 }
 
 [node name="ghost" type="CharacterBody2D" node_paths=PackedStringArray("hitFlasher", "explodeAnim", "atkGap")]
@@ -367,7 +367,7 @@ atkGap = NodePath("atkGap")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_u1s1e")
+&"": SubResource("AnimationLibrary_u1s1e")
 }
 autoplay = "idle"
 
@@ -391,7 +391,7 @@ shape = SubResource("CircleShape2D_jn4b4")
 
 [node name="hitFlasher" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_wyf0g")
+&"": SubResource("AnimationLibrary_wyf0g")
 }
 autoplay = "RESET"
 
@@ -401,14 +401,14 @@ position = Vector2(14, -11)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_s16oq")
 texture = SubResource("AtlasTexture_4y4tf")
 lifetime = 0.35
 explosiveness = 0.75
+process_material = SubResource("ParticleProcessMaterial_s16oq")
 
 [node name="explode" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_hnhq0")
+&"": SubResource("AnimationLibrary_hnhq0")
 }
 autoplay = "RESET"
 

@@ -10,19 +10,19 @@ public partial class Coin : Area2D
     [Export] private AudioStreamPlayer clctSound;
     [Export] private Timer timer;
 
-    private player playerTarget;
+    private BasicsCore _basicsCoreTarget;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        playerTarget = player.Instance;
+        _basicsCoreTarget = BasicsCore.Instance;
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
         if (!canMove) return;
-        direction = GlobalPosition.DirectionTo(playerTarget.GlobalPosition);
+        direction = GlobalPosition.DirectionTo(_basicsCoreTarget.GlobalPosition);
         GlobalPosition += spd * direction * (float)delta;
     }
 
@@ -43,7 +43,7 @@ public partial class Coin : Area2D
                 clctSound.Play();
                 timer.Start();
                 canMove = false;
-                playerTarget.MoneyValue += 1;
+                _basicsCoreTarget.MoneyValue += 1;
                 Visible = false;
                 CollisionMask = 0;
                 CollisionLayer = 0;

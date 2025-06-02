@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://1dfdd512d411"]
 
-[ext_resource type="Script" path="res://code/BlueBird.cs" id="1_0fmmd"]
+[ext_resource type="Script" uid="uid://uy1kf845mx2a" path="res://code/BlueBird.cs" id="1_0fmmd"]
 [ext_resource type="PackedScene" uid="uid://vylk4t7bbscb" path="res://scene/atk_label.tscn" id="2_0y7tf"]
 [ext_resource type="Shader" uid="uid://cwonxegibkw04" path="res://scene/blueBird.tres" id="2_lf0wb"]
 [ext_resource type="Texture2D" uid="uid://bqi714nc4v3on" path="res://resources/Enemies/BlueBird/Flying (32x32).png" id="4_s8yjy"]
@@ -112,8 +112,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u1s1e"]
 _data = {
-"RESET": SubResource("Animation_1wmxq"),
-"idle": SubResource("Animation_35aep")
+&"RESET": SubResource("Animation_1wmxq"),
+&"idle": SubResource("Animation_35aep")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2qgio"]
@@ -223,8 +223,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wyf0g"]
 _data = {
-"RESET": SubResource("Animation_1t5i5"),
-"flash": SubResource("Animation_q4gt5")
+&"RESET": SubResource("Animation_1t5i5"),
+&"flash": SubResource("Animation_q4gt5")
 }
 
 [node name="baseChara" type="CharacterBody2D" node_paths=PackedStringArray("hitFlasher")]
