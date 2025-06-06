@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace SunnyFarm.code;
@@ -36,7 +37,8 @@ public partial class baseGun : Equip
     {
         //enemyList = GetOverlappingAreas();
         //GD.Print(enemyList.Count);
-        if (enemyList.Count > 0) LookAt(enemyList[0].GlobalPosition);
+        Area2D tar = enemyList.OrderBy(a => a.GlobalPosition.DistanceTo(_basicsCore.GlobalPosition)).FirstOrDefault();
+        if (tar!=null) LookAt(tar.GlobalPosition);
         //GD.Print(GlobalRotationDegrees);
         if (Math.Abs(GlobalRotationDegrees) > 90 && MathF.Abs(GlobalRotationDegrees) < 180)
             gunImage.FlipV = true;
