@@ -13,8 +13,8 @@ public partial class StartUi : Control
     {
         playScene = GD.Load<PackedScene>("res://scene/main.tscn");
         editScene = GD.Load<PackedScene>("res://scene/editUI.tscn");
-        var userDir = ProjectSettings.GlobalizePath("user://");
-        var folderPath = Path.Combine(userDir, "saveFolder");
+        string userDir = ProjectSettings.GlobalizePath("user://");
+        string folderPath = Path.Combine(userDir, "saveFolder");
         if (!Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath);
@@ -25,7 +25,7 @@ public partial class StartUi : Control
             GD.Print("Folder already exists: " + folderPath);
         }
 
-        var realPath = Path.Combine(folderPath, "level.yaml");
+        string realPath = Path.Combine(folderPath, "level.yaml");
         if (File.Exists(realPath)) playButton.Visible = true;
         else
             playButton.Visible = false;
@@ -33,7 +33,7 @@ public partial class StartUi : Control
 
     public void playIt()
     {
-        var battleField = playScene.Instantiate<Node2D>();
+        Node2D battleField = playScene.Instantiate<Node2D>();
         GetTree().CurrentScene.QueueFree();
         GetTree().Root.AddChild(battleField);
         GetTree().CurrentScene = battleField;
@@ -41,7 +41,7 @@ public partial class StartUi : Control
 
     public void editIt()
     {
-        var editUi = editScene.Instantiate<EditUi>();
+        EditUi editUi = editScene.Instantiate<EditUi>();
         GetTree().CurrentScene.QueueFree();
         GetTree().Root.AddChild(editUi);
         GetTree().CurrentScene = editUi;

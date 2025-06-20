@@ -17,7 +17,7 @@ public partial class BasicsCore : CharacterBody2D
         get => currentHp;
         set
         {
-            var realValue = value;
+            float realValue = value;
             if (realValue < 0) realValue = 0;
             hpBar.Value = realValue;
             hpBar.GetNode<Label>("Label").Text = $"Hp:{realValue.ToString(CultureInfo.InvariantCulture)}";
@@ -71,7 +71,7 @@ public partial class BasicsCore : CharacterBody2D
 
     private void AddWeaponsToPlayer()
     {
-        foreach (var variable in markers)
+        foreach (Marker2D variable in markers)
             if (variable.GetChildCount() > 0)
             {
                 GD.Print("added it");
@@ -81,10 +81,10 @@ public partial class BasicsCore : CharacterBody2D
 
     public void addWeaponsFromShop(EquipInfo inEquipInfo)
     {
-        var eqp = MatchIt.Instance.matchWeapon(inEquipInfo.weaponType).Instantiate() as Equip;
+        Equip eqp = MatchIt.Instance.matchWeapon(inEquipInfo.weaponType).Instantiate() as Equip;
         playerWeapons.Add(eqp);
         displayWeaponsInGridContainer();
-        foreach (var variable in markers)
+        foreach (Marker2D variable in markers)
             if (variable.GetChildCount() <= 0)
             {
                 variable.AddChild(eqp);
@@ -94,11 +94,11 @@ public partial class BasicsCore : CharacterBody2D
 
     public void displayWeaponsInGridContainer()
     {
-        var i = 0;
+        int i = 0;
         GD.Print($"playerWeapons: {playerWeapons.Count}");
-        foreach (var node in equippedContainer.GetChildren())
+        foreach (Node node in equippedContainer.GetChildren())
         {
-            var button = (Button)node;
+            Button button = (Button)node;
             if (i < playerWeapons.Count)
                 button.Icon = playerWeapons[i++].icon;
         }
@@ -121,7 +121,7 @@ public partial class BasicsCore : CharacterBody2D
         ValuesList.Add(crtHp);
         values = new ObservableDictionary<valueDataEnum, float>();
         //values[]
-        foreach (var variable in GetNode<Node2D>("markers").GetChildren()) markers.Add((Marker2D)variable);
+        foreach (Node variable in GetNode<Node2D>("markers").GetChildren()) markers.Add((Marker2D)variable);
         AddWeaponsToPlayer();
         displayWeaponsInGridContainer();
         // 订阅事件
@@ -140,7 +140,7 @@ public partial class BasicsCore : CharacterBody2D
             }
             //zhuShuXing.AddItem($"{key}: {value}");
         };
-        var i = 0;
+        int i = 0;
         foreach (valueDataEnum value in Enum.GetValues(typeof(valueDataEnum))) values.Add(value, ValuesList[i++], true);
         collisionShape2D.Shape.Set("radius", pickRadius + values.GetValueOrDefault(valueDataEnum.range, 0));
         hpBar.MaxValue = values[valueDataEnum.hp];

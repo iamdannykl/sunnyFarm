@@ -18,7 +18,7 @@ public partial class buy : Button
             if (!equipInfo.isProps)
             {
                 BasicsCore.Instance.MoneyValue -= Text.ToInt();
-                var panel = GetParent<Panel>();
+                Panel panel = GetParent<Panel>();
                 BasicsCore.Instance.addWeaponsFromShop(equipInfo);
                 panel.GetNode<TextureRect>("TextureRect").Texture = null;
                 panel.GetNode<Label>("name").Text = null;
@@ -30,7 +30,7 @@ public partial class buy : Button
             else
             {
                 BasicsCore.Instance.MoneyValue -= Text.ToInt();
-                var panel = GetParent<Panel>();
+                Panel panel = GetParent<Panel>();
                 //player.Instance.addWeaponsFromShop(equipInfo);
                 panel.GetNode<TextureRect>("TextureRect").Texture = null;
                 panel.GetNode<Label>("name").Text = null;

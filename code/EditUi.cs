@@ -57,10 +57,10 @@ public partial class EditUi : Control
     {
         LitWaveNum = -1;
         WaveNum = idx;
-        var litNum = gq.waves[waveNum].litWaves.Count;
-        foreach (var enemyData in vBoxContainer.GetChildren()) enemyData.QueueFree(); //clear all items in Vbox
+        int litNum = gq.waves[waveNum].litWaves.Count;
+        foreach (Node enemyData in vBoxContainer.GetChildren()) enemyData.QueueFree(); //clear all items in Vbox
         lWaveN.Clear();
-        for (var i = 0; i < litNum; i++) lWaveN.AddItem($"{i + 1}");
+        for (int i = 0; i < litNum; i++) lWaveN.AddItem($"{i + 1}");
     }
 
     public void setLitWaveNum(int idx)
@@ -71,12 +71,12 @@ public partial class EditUi : Control
     private void locateIt() //显示
     {
         if (waveNum == -1 || litWaveNum == -1) return;
-        foreach (var enemyData in vBoxContainer.GetChildren()) enemyData.QueueFree(); //clear all items in Vbox
+        foreach (Node enemyData in vBoxContainer.GetChildren()) enemyData.QueueFree(); //clear all items in Vbox
         GD.Print($"wave,litwave:{waveNum}{litWaveNum}");
         if (gq.waves[waveNum].litWaves[litWaveNum].enemyTypes.Count <= 0) return;
-        foreach (var entity in gq.waves[waveNum].litWaves[litWaveNum].enemyTypes)
+        foreach (enemyType entity in gq.waves[waveNum].litWaves[litWaveNum].enemyTypes)
         {
-            var newPanel = enemyPanel.Instantiate() as EnemyPanel;
+            EnemyPanel newPanel = enemyPanel.Instantiate() as EnemyPanel;
             vBoxContainer.AddChild(newPanel);
             newPanel.num.Text = entity.num.ToString();
             newPanel.checkButton.ButtonPressed = entity.isCircle;
@@ -89,7 +89,7 @@ public partial class EditUi : Control
     public void addEnemy()
     {
         if (waveNum == -1 || litWaveNum == -1) return;
-        var ePanel = enemyPanel.Instantiate() as Panel;
+        Panel ePanel = enemyPanel.Instantiate() as Panel;
         vBoxContainer.AddChild(ePanel);
     }
 
@@ -101,8 +101,8 @@ public partial class EditUi : Control
         if (vBoxContainer.GetChildren().Count <= 0) return;
         foreach (EnemyPanel enemyPanel in vBoxContainer.GetChildren())
         {
-            var nm = 0;
-            var cirnm = 0;
+            int nm = 0;
+            int cirnm = 0;
             if (enemyPanel.num.Text.Length > 0) nm = enemyPanel.num.Text.ToInt();
             if (enemyPanel.cirNum.Text.Length > 0) cirnm = enemyPanel.cirNum.Text.ToInt();
             gq.waves[waveNum].litWaves[litWaveNum].enemyTypes.Add(new enemyType()
@@ -125,18 +125,18 @@ public partial class EditUi : Control
 
     private void loadWave()
     {
-        for (var i = 0; i < waveN.ItemCount; i++) gq.waves.Add(new wave(1));
+        for (int i = 0; i < waveN.ItemCount; i++) gq.waves.Add(new wave(1));
         GD.Print(gq.waves.Count);
     }
 
     public void finishIt()
     {
         confirmIt();
-        var ser = new SerializerBuilder().Build();
-        var yamlStr = ser.Serialize(gq);
+        ISerializer ser = new SerializerBuilder().Build();
+        string yamlStr = ser.Serialize(gq);
         GD.Print(yamlStr);
-        var userDir = ProjectSettings.GlobalizePath("user://");
-        var folderPath = Path.Combine(userDir, "saveFolder");
+        string userDir = ProjectSettings.GlobalizePath("user://");
+        string folderPath = Path.Combine(userDir, "saveFolder");
         if (!Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath);
@@ -147,16 +147,16 @@ public partial class EditUi : Control
             GD.Print("Folder already exists: " + folderPath);
         }
 
-        var realPath = Path.Combine(folderPath, "level.yaml");
+        string realPath = Path.Combine(folderPath, "level.yaml");
         if (File.Exists(realPath)) File.Delete(realPath);
-        var sw = new StreamWriter(realPath);
+        StreamWriter sw = new StreamWriter(realPath);
         sw.Write(yamlStr);
         sw.Close();
     }
 
     public void backToStartUI()
     {
-        var startUi = GD.Load<PackedScene>("res://scene/start_ui.tscn").Instantiate<StartUi>();
+        StartUi startUi = GD.Load<PackedScene>("res://scene/start_ui.tscn").Instantiate<StartUi>();
         GetTree().CurrentScene.QueueFree();
         GetTree().Root.AddChild(startUi);
         GetTree().CurrentScene = startUi;

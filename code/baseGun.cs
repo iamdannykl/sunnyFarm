@@ -1,121 +1,16 @@
-/*using System;
-using System.Collections.Generic;
-using System.Linq;
-using Godot;
 
-namespace SunnyFarm.code;
-
-public enum bulletType
-{
-    normal,
-    fire
-}
-
-public partial class baseGun : Equip
-{
-    [Export] public PackedScene blt;
-    [Export] public bulletType btp;
-    [Export] public float atkValue;
-    private Sprite2D gunImage;
-    private List<Area2D> enemyList = new();
-    private BasicsCore _basicsCore;
-    private Marker2D bulletMarker;
-
-    private AudioStreamPlayer bulletSound;
-    Area2D targetObject;
-
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-    {
-        gunImage = GetNode<Sprite2D>("Sprite2D");
-        _basicsCore = GetParent().GetParent().GetParent<BasicsCore>();
-        bulletMarker = GetNode<Marker2D>("Marker2D");
-        bulletSound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
-    }
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-    {
-        aimming();
-    }
-
-    void aimTheTarget()
-    {
-        if(enemyList.Count<=0) return;
-        targetObject = enemyList.MinBy(a=>a.GlobalPosition.DistanceTo(_basicsCore.GlobalPosition));
-        if (IsInstanceValid(targetObject))
-        {
-            shootIt();
-        }
-    }
-    public void addEnemy(Area2D area)
-    {
-        enemyList.Add(area);
-        area.GetParent<enemyBase>().removeSelf += () =>
-        {
-            GD.Print("has been removed!");
-            enemyList.Remove(area);
-        };
-    }
-
-    public void removeEnemy(Area2D area)
-    {
-        enemyList.Remove(area);
-    }
-
-    public void aimming()
-    {
-        if (IsInstanceValid(targetObject))
-            LookAt(targetObject.GlobalPosition);
-        //GD.Print(GlobalRotationDegrees);
-        if (Math.Abs(GlobalRotationDegrees) > 90 && MathF.Abs(GlobalRotationDegrees) < 180)
-            gunImage.FlipV = true;
-        else
-            gunImage.FlipV = false;
-    }
-    public void shootIt()
-    {
-        if (enemyList.Count > 0)
-        {
-            bulletSound.Play();
-            var bltNew = MatchIt.Instance.matchBullet(btp).Instantiate() as Bullet;
-            if (bltNew == null) return;
-            bltNew.atkValue = atkValue + _basicsCore.values.GetValueOrDefault(valueDataEnum.atk, 0);
-            bltNew.GlobalPosition = bulletMarker.GlobalPosition;
-            bltNew.GlobalRotation = bulletMarker.GlobalRotation;
-            spawner.Instance.AddChild(bltNew);
-            //bulletMarker.AddChild(bltNew);
-
-            //GD.Print(Zaodian.Instance.GetNoiseBasedPosition(GlobalPosition, 0.3f));
-        }
-        else
-        {
-            GlobalRotation = 0;
-        }
-    }
-
-    public override void getThisEqip()
-    {
-        
-    }
-}*/
 using System;
 using System.Collections.Generic;
 using Godot;
 
 namespace SunnyFarm.code;
 
-public enum bulletType
-{
-    normal,
-    fire
-}
-
 public partial class baseGun : Equip
 {
     [Export] public PackedScene blt;
     [Export] public bulletType btp;
     [Export] public float atkValue;
+    [Export] public float shootCooldown = 1.0f; // 添加射击冷却时间
 
     private Sprite2D gunImage;
     private List<Area2D> enemyList = new();
@@ -124,9 +19,7 @@ public partial class baseGun : Equip
     private AudioStreamPlayer bulletSound;
 
     private Area2D targetObject;
-
-    private float _findTargetTimer = 0f;
-    private const float TargetSearchInterval = 1f; // 每 0.2 秒查找一次最近敌人
+    private float _shootTimer = 0f; // 射击计时器
 
     public override void _Ready()
     {
@@ -134,16 +27,25 @@ public partial class baseGun : Equip
         _basicsCore = GetParent().GetParent().GetParent<BasicsCore>();
         bulletMarker = GetNode<Marker2D>("Marker2D");
         bulletSound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
+        
+        // 初始查找敌人
+        FindNearestEnemy();
     }
 
     public override void _Process(double delta)
     {
-        _findTargetTimer -= (float)delta;
-
-        if (_findTargetTimer <= 0f)
+        // 检查目标是否有效，无效则重新索敌
+        if (!IsInstanceValid(targetObject))
         {
-            _findTargetTimer = TargetSearchInterval;
             FindNearestEnemy();
+        }
+        
+        // 射击冷却时间处理
+        _shootTimer -= (float)delta;
+        if (_shootTimer <= 0f && IsInstanceValid(targetObject))
+        {
+            Shoot();
+            _shootTimer = shootCooldown;
         }
 
         AimAtTarget();
@@ -151,13 +53,20 @@ public partial class baseGun : Equip
 
     private void FindNearestEnemy()
     {
+        // 清理无效敌人
+        enemyList.RemoveAll(enemy => enemy == null || !IsInstanceValid(enemy));
+        
+        if (enemyList.Count == 0)
+        {
+            targetObject = null;
+            return;
+        }
+
         float nearestDistance = float.MaxValue;
         Area2D nearest = null;
 
-        foreach (var enemy in enemyList)
+        foreach (Area2D enemy in enemyList)
         {
-            if (enemy == null || !IsInstanceValid(enemy)) continue;
-
             float distance = enemy.GlobalPosition.DistanceTo(_basicsCore.GlobalPosition);
             if (distance < nearestDistance)
             {
@@ -167,10 +76,6 @@ public partial class baseGun : Equip
         }
 
         targetObject = nearest;
-        if (targetObject != null)
-        {
-            Shoot();
-        }
     }
 
     public void addEnemy(Area2D area)
@@ -183,9 +88,17 @@ public partial class baseGun : Equip
                 enemyList.Remove(area);
                 if (area == targetObject)
                 {
+                    // 目标移除时立即查找新目标
                     targetObject = null;
+                    FindNearestEnemy();
                 }
             };
+            
+            // 如果当前没有目标，立即将此敌人设为目标
+            if (!IsInstanceValid(targetObject))
+            {
+                targetObject = area;
+            }
         }
     }
 
@@ -194,7 +107,9 @@ public partial class baseGun : Equip
         enemyList.Remove(area);
         if (area == targetObject)
         {
+            // 目标移除时立即查找新目标
             targetObject = null;
+            FindNearestEnemy();
         }
     }
 
@@ -207,11 +122,6 @@ public partial class baseGun : Equip
             float rot = GlobalRotationDegrees;
             gunImage.FlipV = Math.Abs(rot) > 90 && Math.Abs(rot) < 180;
         }
-        else
-        {
-            GlobalRotation = 0;
-            gunImage.FlipV = false;
-        }
     }
 
     private void Shoot()
@@ -219,9 +129,9 @@ public partial class baseGun : Equip
         if (!IsInstanceValid(targetObject)) return;
 
         bulletSound.Play();
-        var bltNew = MatchIt.Instance.matchBullet(btp).Instantiate() as Bullet;
+        Bullet bltNew = MatchIt.Instance.matchBullet(btp).Instantiate() as Bullet;
         if (bltNew == null) return;
-
+        bltNew.baseGun = this;
         bltNew.atkValue = atkValue + _basicsCore.values.GetValueOrDefault(valueDataEnum.atk, 0);
         bltNew.GlobalPosition = bulletMarker.GlobalPosition;
         bltNew.GlobalRotation = bulletMarker.GlobalRotation;
@@ -233,3 +143,10 @@ public partial class baseGun : Equip
         // implement if needed
     }
 }
+
+public enum bulletType
+{
+    normal,
+    fire
+}
+

@@ -477,10 +477,10 @@ grow_vertical = 2
 
 [node name="items" type="Panel" parent="CanvasLayer/nextWave"]
 layout_mode = 0
-offset_left = 31.0
-offset_top = 97.0
-offset_right = 849.0
-offset_bottom = 473.0
+offset_left = 26.0
+offset_top = 147.0
+offset_right = 1429.0
+offset_bottom = 818.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/nextWave/items"]
 layout_mode = 1
@@ -492,25 +492,28 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/nextWave/items/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 30
 
 [node name="itemPanel" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
 layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel"]
 layout_mode = 0
-offset_right = 76.0
-offset_bottom = 76.0
+offset_right = 128.0
+offset_bottom = 128.0
 stretch_mode = 5
 
 [node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel"]
 layout_mode = 0
-offset_left = 81.0
-offset_top = 17.0
-offset_right = 161.0
-offset_bottom = 62.0
+offset_left = 170.0
+offset_top = 6.0
+offset_right = 250.0
+offset_bottom = 51.0
 theme_override_font_sizes/font_size = 18
 text = "XXX"
 horizontal_alignment = 1
@@ -522,7 +525,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 86.0
-offset_bottom = -46.0
+offset_bottom = -91.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -532,7 +535,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -41.0
+offset_top = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "12"
@@ -558,20 +561,21 @@ stream = ExtResource("14_x1oud")
 [node name="itemPanel2" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
 layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel2"]
 layout_mode = 0
-offset_right = 76.0
-offset_bottom = 76.0
+offset_right = 128.0
+offset_bottom = 128.0
 stretch_mode = 5
 
 [node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel2"]
 layout_mode = 0
-offset_left = 81.0
-offset_top = 17.0
-offset_right = 161.0
-offset_bottom = 62.0
+offset_left = 170.0
+offset_top = 6.0
+offset_right = 250.0
+offset_bottom = 51.0
 theme_override_font_sizes/font_size = 18
 text = "XXX"
 horizontal_alignment = 1
@@ -583,7 +587,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 86.0
-offset_bottom = -46.0
+offset_bottom = -91.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -593,7 +597,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -41.0
+offset_top = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "12"
@@ -619,20 +623,21 @@ stream = ExtResource("14_x1oud")
 [node name="itemPanel3" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
 layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel3"]
 layout_mode = 0
-offset_right = 76.0
-offset_bottom = 76.0
+offset_right = 128.0
+offset_bottom = 128.0
 stretch_mode = 5
 
 [node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel3"]
 layout_mode = 0
-offset_left = 81.0
-offset_top = 17.0
-offset_right = 161.0
-offset_bottom = 62.0
+offset_left = 170.0
+offset_top = 6.0
+offset_right = 250.0
+offset_bottom = 51.0
 theme_override_font_sizes/font_size = 18
 text = "XXX"
 horizontal_alignment = 1
@@ -644,7 +649,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 86.0
-offset_bottom = -46.0
+offset_bottom = -91.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -654,7 +659,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -41.0
+offset_top = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "12"
@@ -680,20 +685,21 @@ stream = ExtResource("14_x1oud")
 [node name="itemPanel4" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
 layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel4"]
 layout_mode = 0
-offset_right = 76.0
-offset_bottom = 76.0
+offset_right = 128.0
+offset_bottom = 128.0
 stretch_mode = 5
 
 [node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel4"]
 layout_mode = 0
-offset_left = 81.0
-offset_top = 17.0
-offset_right = 161.0
-offset_bottom = 62.0
+offset_left = 170.0
+offset_top = 6.0
+offset_right = 250.0
+offset_bottom = 51.0
 theme_override_font_sizes/font_size = 18
 text = "XXX"
 horizontal_alignment = 1
@@ -705,7 +711,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 86.0
-offset_bottom = -46.0
+offset_bottom = -91.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -715,7 +721,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -41.0
+offset_top = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "12"
@@ -741,20 +747,21 @@ stream = ExtResource("14_x1oud")
 [node name="itemPanel5" type="Panel" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(171, 246)
 layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel5"]
 layout_mode = 0
-offset_right = 76.0
-offset_bottom = 76.0
+offset_right = 128.0
+offset_bottom = 128.0
 stretch_mode = 5
 
 [node name="name" type="Label" parent="CanvasLayer/nextWave/items/ScrollContainer/HBoxContainer/itemPanel5"]
 layout_mode = 0
-offset_left = 81.0
-offset_top = 17.0
-offset_right = 161.0
-offset_bottom = 62.0
+offset_left = 170.0
+offset_top = 6.0
+offset_right = 250.0
+offset_bottom = 51.0
 theme_override_font_sizes/font_size = 18
 text = "XXX"
 horizontal_alignment = 1
@@ -766,7 +773,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 86.0
-offset_bottom = -46.0
+offset_bottom = -91.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -776,7 +783,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -41.0
+offset_top = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "12"
@@ -800,11 +807,16 @@ text = "锁定"
 stream = ExtResource("14_x1oud")
 
 [node name="continue" type="Button" parent="CanvasLayer/nextWave"]
-layout_mode = 0
-offset_left = 892.0
-offset_top = 523.0
-offset_right = 1106.0
-offset_bottom = 614.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -266.0
+offset_top = -171.0
+grow_horizontal = 0
+grow_vertical = 0
 theme_override_font_sizes/font_size = 40
 text = "CONTINUE"
 
@@ -821,10 +833,10 @@ text = "FINISH
 
 [node name="property" type="Panel" parent="CanvasLayer/nextWave"]
 layout_mode = 0
-offset_left = 876.0
-offset_top = 27.0
-offset_right = 1126.0
-offset_bottom = 477.0
+offset_left = 1480.0
+offset_top = 154.0
+offset_right = 1860.0
+offset_bottom = 817.0
 
 [node name="Label" type="Label" parent="CanvasLayer/nextWave/property"]
 layout_mode = 1
@@ -865,8 +877,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -165.0
-offset_right = -582.0
+offset_top = -212.0
+offset_right = -832.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -876,8 +888,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 576.0
-offset_top = -165.0
+offset_left = 1118.0
+offset_top = -224.0
 offset_right = -279.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -944,19 +956,19 @@ vertical_alignment = 1
 
 [node name="refresh" type="Button" parent="CanvasLayer/nextWave"]
 layout_mode = 0
-offset_left = 718.0
-offset_top = 13.0
-offset_right = 849.0
-offset_bottom = 82.0
+offset_left = 1432.0
+offset_top = 8.0
+offset_right = 1714.0
+offset_bottom = 134.0
 theme_override_font_sizes/font_size = 25
 text = "refresh"
 
 [node name="showFps" type="Label" parent="CanvasLayer"]
 offset_left = 310.0
 offset_top = 4.0
-offset_right = 403.0
-offset_bottom = 53.0
-theme_override_font_sizes/font_size = 35
+offset_right = 655.0
+offset_bottom = 103.0
+theme_override_font_sizes/font_size = 65
 text = "FPS:"
 script = ExtResource("15_ahdy4")
 
@@ -971,8 +983,8 @@ theme_override_font_sizes/font_size = 35
 text = "Money:0"
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer"]
-offset_right = 269.0
-offset_bottom = 57.0
+offset_right = 271.0
+offset_bottom = 88.0
 theme_override_font_sizes/font_size = 35
 theme_override_styles/background = SubResource("StyleBoxFlat_24ow1")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6jflj")

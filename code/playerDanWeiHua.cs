@@ -23,10 +23,10 @@ public partial class playerDanWeiHua : CharacterBody2D
     {
         if (isMoving || vector2Is.Count == 0) return;
         isMoving = true;
-        var tween = CreateTween().SetTrans(Tween.TransitionType.Linear);
-        var characterPosition = GlobalPosition;
-        var tileMapPoint = tileMapLayer.LocalToMap(characterPosition) + vector2Is[0] /* (Vector2I)directionMove */;
-        var tileGlobalPos = tileMapLayer.MapToLocal(tileMapPoint);
+        Tween tween = CreateTween().SetTrans(Tween.TransitionType.Linear);
+        Vector2 characterPosition = GlobalPosition;
+        Vector2I tileMapPoint = tileMapLayer.LocalToMap(characterPosition) + vector2Is[0] /* (Vector2I)directionMove */;
+        Vector2 tileGlobalPos = tileMapLayer.MapToLocal(tileMapPoint);
         GD.PrintT(tileMapPoint, tileGlobalPos);
         GD.Print(vector2Is.Count);
         tween.TweenProperty(this, "position", tileGlobalPos, timePerGrid);

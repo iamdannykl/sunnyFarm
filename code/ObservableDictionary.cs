@@ -23,7 +23,7 @@ public class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>
         get => base[key];
         set
         {
-            var isUpdate = ContainsKey(key);
+            bool isUpdate = ContainsKey(key);
             base[key] = value;
             if (isUpdate) OnItemAdded?.Invoke(key, value, false);
         }

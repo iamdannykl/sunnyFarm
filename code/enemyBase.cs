@@ -47,7 +47,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
     {
         if (hasDropCoin) return;
         hasDropCoin = true;
-        var coinNew = MatchIt.Instance.coin.Instantiate() as Area2D;
+        Area2D coinNew = MatchIt.Instance.coin.Instantiate() as Area2D;
         if (coinNew != null)
         {
             coinNew.GlobalPosition = GlobalPosition;
@@ -65,7 +65,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
 
     public void fbdMove(Node2D playerColl)
     {
-        var tileColl = playerColl as PhysicsBody2D;
+        PhysicsBody2D tileColl = playerColl as PhysicsBody2D;
         if (tileColl != null && tileColl.CollisionLayer == 2)
         {
             canMove = false;
@@ -81,7 +81,7 @@ public partial class enemyBase : CharacterBody2D, Iattackble
 
     public void youCanMove(Node2D playerColl)
     {
-        var tileColl = playerColl as PhysicsBody2D;
+        PhysicsBody2D tileColl = playerColl as PhysicsBody2D;
         if (tileColl != null && tileColl.CollisionLayer == 2)
         {
             canMove = true;
@@ -102,13 +102,13 @@ public partial class enemyBase : CharacterBody2D, Iattackble
 
     public void showTheAtkValue()
     {
-        var atkLabelNew = atkLabel.Instantiate() as Label;
+        Label atkLabelNew = atkLabel.Instantiate() as Label;
         atkLabelNew.Text = atkValue.ToString();
         GetTree().CurrentScene.GetNode<Node2D>("playObjects").AddChild(atkLabelNew);
         atkLabelNew.GlobalPosition = GetNode<Marker2D>("atkText").GlobalPosition;
     }
 
-    public virtual void attacked(float trueDamage)
+    public virtual void attacked(float trueDamage,baseGun gun)
     {
         /* throw new NotImplementedException(); */
         atkValue = trueDamage;

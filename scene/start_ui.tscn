@@ -12,7 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fmpve")
-playButton = NodePath("play")
+playButton = NodePath("CanvasLayer/play")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(-0.871704, -52.4005)
@@ -24,50 +24,60 @@ position = Vector2(-2, -173)
 scale = Vector2(0.609, 0.609)
 texture = ExtResource("3_2jfat")
 
-[node name="play" type="Button" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(2, -9)
+zoom = Vector2(1.63, 1.63)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="play" type="Button" parent="CanvasLayer"]
 visible = false
-layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -660.872
-offset_top = -171.401
-offset_right = -493.872
-offset_bottom = -64.4005
+anchor_bottom = 0.5
+offset_left = -83.5
+offset_top = -53.5002
+offset_right = 83.5
+offset_bottom = 53.5002
 grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 35
 text = "Play"
 
-[node name="edit" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 5
+[node name="edit" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -660.872
-offset_top = -20.4005
-offset_right = -493.872
-offset_bottom = 86.5995
+anchor_bottom = 0.5
+offset_left = -83.0
+offset_top = 133.0
+offset_right = 84.0
+offset_bottom = 240.0
 grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 35
 text = "Edit
 "
 
-[node name="quit" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 5
+[node name="quit" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -660.872
-offset_top = 130.599
-offset_right = -493.872
-offset_bottom = 237.599
+anchor_bottom = 0.5
+offset_left = -83.0
+offset_top = 291.0
+offset_right = 84.0
+offset_bottom = 398.0
 grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 35
 text = "Quit
 "
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
-[connection signal="button_up" from="play" to="." method="playIt"]
-[connection signal="button_up" from="edit" to="." method="editIt"]
-[connection signal="button_up" from="quit" to="." method="closeIt"]
+[connection signal="button_up" from="CanvasLayer/play" to="." method="playIt"]
+[connection signal="button_up" from="CanvasLayer/edit" to="." method="editIt"]
+[connection signal="button_up" from="CanvasLayer/quit" to="." method="closeIt"]

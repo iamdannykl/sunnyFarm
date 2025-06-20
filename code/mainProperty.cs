@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 namespace SunnyFarm.code;
@@ -18,7 +19,7 @@ public partial class mainProperty : ItemList
         GD.Print($"Waiting 2 seconds");
         await ToSignal(GetTree().CreateTimer(2f), "timeout");
         GD.Print($"after 2 seconds{_basicsCore.values.Count}");
-        foreach (var VARIABLE in _basicsCore.values)
+        foreach (KeyValuePair<valueDataEnum, float> VARIABLE in _basicsCore.values)
         {
             AddItem($"{VARIABLE.Key}: {VARIABLE.Value}");
             GD.Print($"has added {_basicsCore.values.Count}");

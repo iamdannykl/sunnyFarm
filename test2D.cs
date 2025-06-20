@@ -8,7 +8,7 @@ public partial class test2D : Node2D
 
     private void spawnIt()
     {
-        var coin = coinBI.Instantiate() as Area2D;
+        Area2D coin = coinBI.Instantiate() as Area2D;
         AddChild(coin);
     }
 }

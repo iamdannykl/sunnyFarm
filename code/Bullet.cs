@@ -9,7 +9,7 @@ public partial class Bullet : Area2D
     public float atkValue;
     private bool canAtk = true;
     private Godot.Collections.Array<Area2D> target;
-
+    public baseGun baseGun;
     private float dis = 0;
 
     // Called when the node enters the scene tree for the first time.
@@ -20,7 +20,7 @@ public partial class Bullet : Area2D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _PhysicsProcess(double delta)
     {
-        var direction = Vector2.Right.Rotated(Rotation);
+        Vector2 direction = Vector2.Right.Rotated(Rotation);
         Position += direction * speed * (float)delta;
         dis += speed * (float)delta;
         if (dis > rangeBlt) QueueFree();
@@ -33,8 +33,8 @@ public partial class Bullet : Area2D
         target = GetOverlappingAreas();
         if (target.Count > 0)
         {
-            var iattackble = target[0].GetParent<Iattackble>();
-            if (iattackble != null) iattackble.attacked(atkValue);
+            Iattackble iattackble = target[0].GetParent<Iattackble>();
+            iattackble?.attacked(atkValue,baseGun);
             QueueFree();
         }
     }

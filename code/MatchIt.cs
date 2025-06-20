@@ -63,17 +63,17 @@ public partial class MatchIt : Node
 
     private void spawnTheInfoOfEquips()
     {
-        foreach (var equip in findWeapons)
+        foreach (KeyValuePair<weapons, PackedScene> equip in findWeapons)
         {
-            var temEquip = equip.Value.Instantiate() as Equip;
+            Equip temEquip = equip.Value.Instantiate() as Equip;
             if (temEquip != null)
                 equipInfos.Add(new EquipInfo(temEquip.discribe, temEquip.weaponType, temEquip.MyTagsList,
                     temEquip.Rarity, temEquip.icon, temEquip.price, temEquip.isProps,temEquip.zhuangBeiType));
             if (temEquip != null) temEquip.QueueFree();
         }
-        foreach (var zhuangBei in findZhuangBei)
+        foreach (KeyValuePair<zhuangBei, PackedScene> zhuangBei in findZhuangBei)
         {
-            var temEquip = zhuangBei.Value.Instantiate() as Equip;
+            Equip temEquip = zhuangBei.Value.Instantiate() as Equip;
             if (temEquip != null)
                 equipInfos.Add(new EquipInfo(temEquip.discribe, temEquip.weaponType, temEquip.MyTagsList,
                     temEquip.Rarity, temEquip.icon, temEquip.price, temEquip.isProps,temEquip.zhuangBeiType));
@@ -83,25 +83,25 @@ public partial class MatchIt : Node
 
     public PackedScene matchBullet(bulletType btp)
     {
-        if (findBullet.TryGetValue(btp, out var result)) return result;
+        if (findBullet.TryGetValue(btp, out PackedScene result)) return result;
         return null;
     }
 
     public PackedScene matchEnemy(enemyTypeEnum type)
     {
-        if (findEnemy.TryGetValue(type, out var scene)) return scene;
+        if (findEnemy.TryGetValue(type, out PackedScene scene)) return scene;
         return null;
     }
 
     public PackedScene matchWeapon(weapons type)
     {
-        if (findWeapons.TryGetValue(type, out var scene)) return scene;
+        if (findWeapons.TryGetValue(type, out PackedScene scene)) return scene;
         return null;
     }
 
     public PackedScene matchZhuangBei(zhuangBei zi)
     {
-        if (findZhuangBei.TryGetValue(zi, out var result)) return result;
+        if (findZhuangBei.TryGetValue(zi, out PackedScene result)) return result;
         return null;
     }
 
